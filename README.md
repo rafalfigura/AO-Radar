@@ -52,3 +52,9 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 ## Acknowledgments
 
 * Thanks to _BLU for help
+
+## Donations
+
+* *Zcash*	t1W7qHQhLagrrHRVdZQv5mFWdBsGRD92wTp
+* *Litecoin*	LcZQaXibdpLaP3iwp5mzju9EMLDpkrGqsc
+* *Ethereum*	0x13dc1967492a01d8b8926d3bcd234443984c77c2
