@@ -16,6 +16,14 @@ game_dir\game\Albion-Online_Data\Managed
 ```
 * Compile and Have Fun
 
+### Features
+  [Look at those images](https://imgur.com/a/xRBWGvx)
+  
+  * Player radar
+  * Harvestable radar
+  * Map on top of game
+
+  
 ### Requirements
 
 * Download and install WinPcap 4.1.3 [From Here](https://www.winpcap.org/)
