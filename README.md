@@ -14,6 +14,7 @@ git clone https://github.com/rafalfigura/AO-Radar.git
 ```
 game_dir\game\Albion-Online_Data\Managed
 ```
+ or in libs folder
 * Compile and Have Fun
 
 ### Features
