@@ -13,16 +13,16 @@
 *.userprefs
 
 # Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
-x64/
-x86/
-bld/
-[Bb]in/
-[Oo]bj/
-[Ll]og/
+AlbionRadaro/[Dd]ebug/
+AlbionRadaro/[Dd]ebugPublic/
+AlbionRadaro/[Rr]elease/
+AlbionRadaro/[Rr]eleases/
+AlbionRadaro/x64/
+AlbionRadaro/x86/
+AlbionRadaro/bld/
+AlbionRadaro/[Bb]in/
+AlbionRadaro/[Oo]bj/
+AlbionRadaro/[Ll]og/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -41,8 +41,8 @@ Generated\ Files/
 TestResult.xml
 
 # Build Results of an ATL Project
-[Dd]ebugPS/
-[Rr]eleasePS/
+AlbionRadaro/[Dd]ebugPS/
+AlbionRadaro/[Rr]eleasePS/
 dlldata.c
 
 # Benchmark Results
