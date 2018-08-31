@@ -32,6 +32,7 @@ game_dir\game\Albion-Online_Data\Managed
 ## Troubleshooting
 
 > System.InvalidOperationException 
+
 Try to reinstall winpcap - thats main reason for that error 
 Use [this](https://github.com/PcapDotNet/Pcap.Net/wiki/Using-Pcap.Net-in-your-programs) to setup wincap.
 
