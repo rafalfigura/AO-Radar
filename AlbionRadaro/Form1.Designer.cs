@@ -316,7 +316,6 @@
             // cbSounds
             // 
             this.cbSounds.AutoSize = true;
-            this.cbSounds.Enabled = false;
             this.cbSounds.Location = new System.Drawing.Point(6, 42);
             this.cbSounds.Name = "cbSounds";
             this.cbSounds.Size = new System.Drawing.Size(103, 17);
