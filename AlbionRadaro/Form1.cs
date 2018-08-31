@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -102,8 +103,9 @@ namespace AlbionRadaro
                             g.Clear(Color.Transparent);
                             lpX = playerHandler.localPlayerPosX() * MULTIPLER;
                             lpY = playerHandler.localPlayerPosY() * MULTIPLER;
-                            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                            g.InterpolationMode = InterpolationMode.NearestNeighbor;
                             g.TranslateTransform(WIDTH / 2, HEIGHT / 2);
+
                             g.FillEllipse(Brushes.Black, -2, -2, 4, 4);
                             g.DrawEllipse(linePen, -80, -80, 160, 160);
                             g.DrawEllipse(linePen, -170, -170, 340, 340);
@@ -133,8 +135,8 @@ namespace AlbionRadaro
                                 Bitmap b = new Bitmap((int)sizeOfMapInfo.Width * 2, (int)sizeOfMapInfo.Width * 2);
                                 b.MakeTransparent();
                                 Graphics gg = Graphics.FromImage(b);
+                                gg.InterpolationMode = InterpolationMode.NearestNeighbor;
                                 gg.Clear(Color.Transparent);
-                                gg.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
                                 gg.TranslateTransform(sizeOfMapInfo.Width / 2, sizeOfMapInfo.Width / 2);
                                 gg.RotateTransform(-45f);
                                 gg.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
@@ -272,6 +274,7 @@ namespace AlbionRadaro
             Settings.UpdateHarvestable(HarvestableType.ORE, this.cbOre.Checked);
             Settings.UpdateHarvestable(HarvestableType.ROCK, this.cbRock.Checked);
             Settings.UpdateHarvestable(HarvestableType.HIDE, this.cbTreasures.Checked);
+            Settings.setSoundsOnPlayer(cbSounds.Checked);
         }
         private void tierCheckChange(object sender, EventArgs e)
         {
@@ -367,6 +370,11 @@ namespace AlbionRadaro
         private void btnDebug_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void cbSounds_CheckedChanged(object sender, EventArgs e)
+        {
+            updateSettings();
         }
 
 

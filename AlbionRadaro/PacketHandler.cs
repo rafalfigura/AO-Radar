@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Albion.Common.Photon;
+using System.Threading;
 
 namespace AlbionRadaro
 {
@@ -248,6 +249,10 @@ namespace AlbionRadaro
             playerHandler.UpdatePlayerPosition(id, posX, posY);
         }
         private void onNewCharacterEvent(Dictionary<byte, object> parameters){
+
+            if (Settings.PlaySoundOnPlayer())
+                new Thread(() => Console.Beep(1000,1000)).Start();
+
 
             int id = int.Parse(parameters[0].ToString());
             string nick = parameters[1].ToString();

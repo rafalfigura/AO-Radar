@@ -323,6 +323,7 @@
             this.cbSounds.TabIndex = 10;
             this.cbSounds.Text = "Sound on player";
             this.cbSounds.UseVisualStyleBackColor = true;
+            this.cbSounds.CheckedChanged += new System.EventHandler(this.cbSounds_CheckedChanged);
             // 
             // cbDisplayPeople
             // 

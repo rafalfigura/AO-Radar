@@ -12,6 +12,7 @@ namespace AlbionRadaro
         static List<HarvestableType> harvestable = new List<HarvestableType>();
         static bool onlyRares = false;
         static bool displayPeople = true;
+        static bool soundsOnPlayer = false;
 
         public static bool DisplayPeople
         {
@@ -19,7 +20,10 @@ namespace AlbionRadaro
             set { Settings.displayPeople = value; }
         }
 
-        
+        public static bool PlaySoundOnPlayer()
+        {
+            return soundsOnPlayer;
+        }
         public static void UpdateDisplayPeople(bool val)
         {
             displayPeople = val;
@@ -65,6 +69,11 @@ namespace AlbionRadaro
         internal static void UpdateOnlyRares(bool raresOnly)
         {
             onlyRares = raresOnly;
+        }
+
+        internal static void setSoundsOnPlayer(bool p)
+        {
+            soundsOnPlayer = p;
         }
     }
 }
