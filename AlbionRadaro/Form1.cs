@@ -54,19 +54,21 @@ namespace AlbionRadaro
         private void Form1_Load(object sender, EventArgs e)
         {
             updateSettings();
-            try { 
-            _eventHandler = new PacketHandler(playerHandler, harvestableHandler);
-            photonPacketHandler = new PhotonPacketHandler(_eventHandler);
-            
-            Thread t = new Thread(() =>
+            try
             {
-                createListener();
-            });
-            t.Start();
-            Thread d = new Thread(() =>
-            {
-                Pen linePen = new Pen(Color.Black, 2f);
-                Brush[] harvestBrushes = {
+                _eventHandler = new PacketHandler(playerHandler, harvestableHandler);
+                photonPacketHandler = new PhotonPacketHandler(_eventHandler);
+
+                Thread t = new Thread(() =>
+                {
+                    createListener();
+                });
+                t.Start();
+
+                Thread d = new Thread(() =>
+                {
+                    Pen linePen = new Pen(Color.Black, 2f);
+                    Brush[] harvestBrushes = {
                                            Brushes.Black,
                                            Brushes.Gray, 
                                            Brushes.Gray, 
@@ -77,111 +79,111 @@ namespace AlbionRadaro
                                            Brushes.Gold, 
                                            Brushes.Silver
                                        };
-                Pen[] chargePen = {
+                    Pen[] chargePen = {
                             new Pen (Color.Green, 3f),
                             new Pen(Color.Blue, 4f), 
                             new Pen(Color.Purple, 5f), 
                         };
-                Pen playerPen = new Pen(Color.Red, 2f);
-                Brush playerBrush = Brushes.Red;
-                int HEIGHT, WIDTH, MULTIPLER = 4;
-                HEIGHT = mapForm.pictureBox1.Height;
-                WIDTH = mapForm.pictureBox1.Height;
-                Bitmap bitmap = new Bitmap(WIDTH, HEIGHT);
+                    Pen playerPen = new Pen(Color.Red, 2f);
+                    Brush playerBrush = Brushes.Red;
+                    int HEIGHT, WIDTH, MULTIPLER = 4;
+                    HEIGHT = mapForm.pictureBox1.Height;
+                    WIDTH = mapForm.pictureBox1.Height;
+                    Bitmap bitmap = new Bitmap(WIDTH, HEIGHT);
 
-                Single lpX;
-                Single lpY;
-                Font font = new Font("Arial", 11, FontStyle.Bold);
-                while (true)
-                {
-
-                    using (Graphics g = Graphics.FromImage(bitmap))
+                    Single lpX;
+                    Single lpY;
+                    Font font = new Font("Arial", 11, FontStyle.Bold);
+                    while (true)
                     {
-                        g.Clear(Color.Transparent);
-                        lpX = playerHandler.localPlayerPosX() * MULTIPLER;
-                        lpY = playerHandler.localPlayerPosY() * MULTIPLER;
-                        g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-                        g.TranslateTransform(WIDTH / 2, HEIGHT / 2);
-                        g.FillEllipse(Brushes.Black, -2, -2, 4, 4);
-                        g.DrawEllipse(linePen, -80, -80, 160, 160);
-                        g.DrawEllipse(linePen, -170, -170, 340, 340);
-                        g.DrawEllipse(linePen, -WIDTH / 2, -HEIGHT / 2, WIDTH - 1, HEIGHT - 1);
 
-                        List<Harvestable> hLis = new List<Harvestable>();
-                        lock (harvestableHandler)
+                        using (Graphics g = Graphics.FromImage(bitmap))
                         {
-                            try
-                            {
-                                hLis = this.harvestableHandler.HarvestableList.ToList();
-                            }
-                            catch (Exception e1)
-                            {
-                                //TODO - there is thread conflict. From time to time there is exception // maybe thread safe list?
-                            }
-                        }
-                        foreach (Harvestable h in hLis)
-                        {
-                            if (!Settings.IsInTiers(h.Tier)) continue;
-                            if (!Settings.IsInHarvestable((HarvestableType)h.Type)) continue;
-                            if (Settings.OnlyRares() && h.Charges == 0) continue;
-                            if (h.Size  == 0) continue;
+                            g.Clear(Color.Transparent);
+                            lpX = playerHandler.localPlayerPosX() * MULTIPLER;
+                            lpY = playerHandler.localPlayerPosY() * MULTIPLER;
+                            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                            g.TranslateTransform(WIDTH / 2, HEIGHT / 2);
+                            g.FillEllipse(Brushes.Black, -2, -2, 4, 4);
+                            g.DrawEllipse(linePen, -80, -80, 160, 160);
+                            g.DrawEllipse(linePen, -170, -170, 340, 340);
+                            g.DrawEllipse(linePen, -WIDTH / 2, -HEIGHT / 2, WIDTH - 1, HEIGHT - 1);
 
-                            SizeF sizeOfMapInfo = g.MeasureString(h.getMapInfo(), font);
-
-                            Bitmap b = new Bitmap((int)sizeOfMapInfo.Width * 2, (int)sizeOfMapInfo.Width * 2);
-                            b.MakeTransparent();
-                            Graphics gg = Graphics.FromImage(b);
-                            gg.Clear(Color.Transparent);
-                            gg.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-                            gg.TranslateTransform(sizeOfMapInfo.Width / 2, sizeOfMapInfo.Width / 2);
-                            gg.RotateTransform(-45f);
-                            gg.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-                            gg.DrawString(h.getMapInfo(), font, harvestBrushes[h.Tier], 0, 0);
-                            gg.TranslateTransform(-sizeOfMapInfo.Width / 2, -sizeOfMapInfo.Width / 2);
-                            b.RotateFlip(RotateFlipType.Rotate180FlipX);
-
-                            float imagePosX = h.PosX * MULTIPLER - lpX - (sizeOfMapInfo.Width / 2) - (sizeOfMapInfo.Width / 2);
-                            float imagePosY = h.PosY * MULTIPLER - lpY - (sizeOfMapInfo.Width / 2) - (sizeOfMapInfo.Height / 2);
-
-                            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-                            g.FillEllipse(Brushes.Black, h.PosX * MULTIPLER - 10 - lpX + 2, h.PosY * MULTIPLER - 10 - lpY + 7, 20, 20);
-                            
-
-                            g.DrawImage(b, imagePosX, imagePosY);
-
-                            if (h.Charges == 1) g.DrawEllipse(chargePen[0], h.PosX * MULTIPLER - 10 - lpX + 2, h.PosY * MULTIPLER - 10 - lpY + 7, 20, 20);
-                            else if (h.Charges == 2) g.DrawEllipse(chargePen[1], h.PosX * MULTIPLER - 12 - lpX + 2, h.PosY * MULTIPLER - 12 - lpY + 7, 24, 24);
-                            else if (h.Charges == 3) g.DrawEllipse(chargePen[2], h.PosX * MULTIPLER - 14 - lpX + 2, h.PosY * MULTIPLER - 14 - lpY + 7, 28, 28);
-
-                        }
-                        if (Settings.DisplayPeople)
-                        {
-                            List<Player> pLis = new List<Player>();
-                            lock (this.playerHandler.PlayersInRange)
+                            List<Harvestable> hLis = new List<Harvestable>();
+                            lock (harvestableHandler)
                             {
                                 try
                                 {
-                                    pLis = this.playerHandler.PlayersInRange.ToList();
+                                    hLis = this.harvestableHandler.HarvestableList.ToList();
                                 }
-                                catch (Exception e2)
+                                catch (Exception e1)
                                 {
-                                    //TODO - there is thread conflict. From time to time there is exception 
+                                    //TODO - there is thread conflict. From time to time there is exception // maybe thread safe list?
                                 }
                             }
+                            foreach (Harvestable h in hLis)
+                            {
+                                if (!Settings.IsInTiers(h.Tier)) continue;
+                                if (!Settings.IsInHarvestable((HarvestableType)h.Type)) continue;
+                                if (Settings.OnlyRares() && h.Charges == 0) continue;
+                                if (h.Size == 0) continue;
 
-                            foreach (Player p in pLis)
-                                g.FillEllipse(playerBrush, p.PosX * MULTIPLER - 3 - lpX, p.PosY * MULTIPLER - 3 - lpY, 6, 6);
+                                SizeF sizeOfMapInfo = g.MeasureString(h.getMapInfo(), font);
+
+                                Bitmap b = new Bitmap((int)sizeOfMapInfo.Width * 2, (int)sizeOfMapInfo.Width * 2);
+                                b.MakeTransparent();
+                                Graphics gg = Graphics.FromImage(b);
+                                gg.Clear(Color.Transparent);
+                                gg.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                                gg.TranslateTransform(sizeOfMapInfo.Width / 2, sizeOfMapInfo.Width / 2);
+                                gg.RotateTransform(-45f);
+                                gg.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                                gg.DrawString(h.getMapInfo(), font, harvestBrushes[h.Tier], 0, 0);
+                                gg.TranslateTransform(-sizeOfMapInfo.Width / 2, -sizeOfMapInfo.Width / 2);
+                                b.RotateFlip(RotateFlipType.Rotate180FlipX);
+
+                                float imagePosX = h.PosX * MULTIPLER - lpX - (sizeOfMapInfo.Width / 2) - (sizeOfMapInfo.Width / 2);
+                                float imagePosY = h.PosY * MULTIPLER - lpY - (sizeOfMapInfo.Width / 2) - (sizeOfMapInfo.Height / 2);
+
+                                g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                                g.FillEllipse(Brushes.Black, h.PosX * MULTIPLER - 10 - lpX + 2, h.PosY * MULTIPLER - 10 - lpY + 7, 20, 20);
+
+
+                                g.DrawImage(b, imagePosX, imagePosY);
+
+                                if (h.Charges == 1) g.DrawEllipse(chargePen[0], h.PosX * MULTIPLER - 10 - lpX + 2, h.PosY * MULTIPLER - 10 - lpY + 7, 20, 20);
+                                else if (h.Charges == 2) g.DrawEllipse(chargePen[1], h.PosX * MULTIPLER - 12 - lpX + 2, h.PosY * MULTIPLER - 12 - lpY + 7, 24, 24);
+                                else if (h.Charges == 3) g.DrawEllipse(chargePen[2], h.PosX * MULTIPLER - 14 - lpX + 2, h.PosY * MULTIPLER - 14 - lpY + 7, 28, 28);
+
+                            }
+                            if (Settings.DisplayPeople)
+                            {
+                                List<Player> pLis = new List<Player>();
+                                lock (this.playerHandler.PlayersInRange)
+                                {
+                                    try
+                                    {
+                                        pLis = this.playerHandler.PlayersInRange.ToList();
+                                    }
+                                    catch (Exception e2)
+                                    {
+                                        //TODO - there is thread conflict. From time to time there is exception 
+                                    }
+                                }
+
+                                foreach (Player p in pLis)
+                                    g.FillEllipse(playerBrush, p.PosX * MULTIPLER - 3 - lpX, p.PosY * MULTIPLER - 3 - lpY, 6, 6);
+                            }
+
+                            g.TranslateTransform(-WIDTH / 2, -HEIGHT / 2);
+                            bitmap.RotateFlip(RotateFlipType.Rotate90FlipX);
+                            mapForm.pictureBox1.Image = RotateImage(bitmap, -45f);
+
                         }
-
-                        g.TranslateTransform(-WIDTH / 2, -HEIGHT / 2);
-                        bitmap.RotateFlip(RotateFlipType.Rotate90FlipX);
-                        mapForm.pictureBox1.Image = RotateImage(bitmap, -45f);
-
+                        Thread.Sleep(100);
                     }
-                    Thread.Sleep(100);
-                }
-            });
-            d.Start();
+                });
+                d.Start();
             }
             catch (Exception ea)
             {
@@ -201,7 +203,8 @@ namespace AlbionRadaro
         private void createListener()
         {
             IList<LivePacketDevice> allDevices = LivePacketDevice.AllLocalMachine;
-            if (allDevices.Count == 0) {
+            if (allDevices.Count == 0)
+            {
                 MessageBox.Show("No interfaces found! Make sure WinPcap is installed.");
                 return;
             }
@@ -209,21 +212,23 @@ namespace AlbionRadaro
             for (int i = 0; i != allDevices.Count; ++i)
             {
                 LivePacketDevice device = allDevices[i];
-               
+
                 if (device.Description != null)
                     Console.WriteLine(" (" + device.Description + ")");
                 else
                     Console.WriteLine(" (No description available)");
             }
-            
-            foreach(PacketDevice selectedDevice in allDevices.ToList()){
-                    // Open the device
-                Thread t = new Thread(()=>{
-                 using (PacketCommunicator communicator =
-                        selectedDevice.Open(65536,                                  // portion of the packet to capture
+
+            foreach (PacketDevice selectedDevice in allDevices.ToList())
+            {
+                // Open the device
+                Thread t = new Thread(() =>
+                {
+                    using (PacketCommunicator communicator =
+                           selectedDevice.Open(65536,                                  // portion of the packet to capture
                         // 65536 guarantees that the whole packet will be captured on all the link layers
-                                            PacketDeviceOpenAttributes.Promiscuous, // promiscuous mode
-                                            1000))                                  // read timeout
+                                               PacketDeviceOpenAttributes.Promiscuous, // promiscuous mode
+                                               1000))                                  // read timeout
                     {
                         // Check the link layer. We support only Ethernet for simplicity.
                         if (communicator.DataLink.Kind != DataLinkKind.Ethernet)
@@ -243,12 +248,12 @@ namespace AlbionRadaro
 
                         // start the capture
                         communicator.ReceivePackets(0, photonPacketHandler.PacketHandler);
-                     
+
                     }
                 });
                 t.Start();
             }
-                   
+
         }
 
         private void updateSettings()
@@ -305,7 +310,7 @@ namespace AlbionRadaro
                 mapForm.Opacity = 1;
                 mapForm.FormBorderStyle = FormBorderStyle.FixedSingle;
                 var location = mapForm.PointToScreen(new Point(0, 0));
-                mapForm.Top = location.Y -  30;
+                mapForm.Top = location.Y - 30;
 
                 mapForm.BackColor = System.Drawing.SystemColors.Control;
                 mapForm.TransparencyKey = Color.Transparent;
@@ -336,10 +341,12 @@ namespace AlbionRadaro
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (mapForm.BackColor != System.Drawing.SystemColors.Control)  {
+            if (mapForm.BackColor != System.Drawing.SystemColors.Control)
+            {
                 mapForm.BackColor = System.Drawing.SystemColors.Control;
                 mapForm.TransparencyKey = Color.Transparent;
-            } else
+            }
+            else
             {
                 mapForm.BackColor = Color.White;
                 mapForm.TransparencyKey = Color.White;
@@ -359,9 +366,9 @@ namespace AlbionRadaro
 
         private void btnDebug_Click(object sender, EventArgs e)
         {
-            
+
         }
-            
-        
+
+
     }
 }
