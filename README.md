@@ -16,7 +16,7 @@ game_dir\game\Albion-Online_Data\Managed
 ```
 * Compile and Have Fun
 
-### Prerequisites
+### Requirements
 
 * Download and install WinPcap 4.1.3 [From Here](https://www.winpcap.org/)
 
