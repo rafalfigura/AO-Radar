@@ -9,8 +9,6 @@ namespace AlbionRadaro
 {
     public class MouseClickMessageFilter : IMessageFilter
     {
-
-
         private const int LButtonDown = 0x201;
         private const int LButtonUp = 0x202;
         private const int LButtonDoubleClick = 0x203;

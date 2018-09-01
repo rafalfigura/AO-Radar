@@ -60,13 +60,28 @@ namespace AlbionRadaro
                 default: break;
             }
         }
+        public void OnResponse(byte operationCode, short returnCode, Dictionary<byte, object> parameters)
+        {
+            //    Console.WriteLine("OnResponse: " + operationCode + " returnCode: " + returnCode);
+        }
+        public void OnRequest(byte operationCode, Dictionary<byte, object> parameters)
+        {
+            OperationCodes code = (OperationCodes)parameters[253];
+            //Console.WriteLine("OnRequest: " + code);
+            switch (code)
+            {
+                case OperationCodes.Move:
+                    onLocalPlayerMovement(parameters);
+                    break;
+            }
+        }
+
 
         private void onJoinFinished(Dictionary<byte, object> parameters)
         {
             this.harvestableHandler.HarvestableList.Clear();
             this.playerHandler.PlayersInRange.Clear();
         }
-
         private void onNewMob(Dictionary<byte, object> parameters)
         {
             /*
@@ -87,7 +102,64 @@ namespace AlbionRadaro
              */
             //foreach (KeyValuePair<byte, object> kvp in parameters)
             // Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
-        }  
+        }
+        private void onNewSimpleHarvestableObjectList(Dictionary<byte, object> parameters)
+        {
+            //return;
+            foreach (KeyValuePair<byte, object> kvp in parameters)
+                Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+
+            List<int> a0 = new List<int>();
+            if (parameters[0].GetType() == typeof(Byte[]))
+            {
+                Byte[] typeListByte = (Byte[])parameters[0]; //list of types
+                foreach (Byte b in typeListByte)
+                    a0.Add(b);
+            }
+            else if (parameters[0].GetType() == typeof(Int16[]))
+            {
+                Int16[] typeListByte = (Int16[])parameters[0]; //list of types
+                foreach (Int16 b in typeListByte)
+                    a0.Add(b);
+            }
+            else
+            {
+                Console.WriteLine("onNewSimpleHarvestableObjectList type error: " + parameters[0].GetType());
+                return;
+            }
+            try
+            {
+                /*
+                Key = 0, Value = System.Int16[] //id
+                Key = 1, Value = System.Byte[] // type WOOD etc
+                Key = 2, Value = System.Byte[] // tier
+                Key = 3, Value = System.Single[] //location
+                Key = 4, Value = System.Byte[] // size
+                Key = 252, Value = 29
+                 */
+                Byte[] a1 = (Byte[])parameters[1]; //list of types
+                Byte[] a2 = (Byte[])parameters[2]; //list of tiers
+                Single[] a3 = (Single[])parameters[3]; //list of positions X1, Y1, X2, Y2 ...
+                Byte[] a4 = (Byte[])parameters[4]; //size
+
+                for (int i = 0; i < a0.Count; i++)
+                {
+                    int id = (int)a0.ElementAt(i);
+                    byte type = (byte)a1[i];
+                    byte tier = (byte)a2[i];
+                    Single posX = (Single)a3[i * 2];
+                    Single posY = (Single)a3[i * 2 + 1];
+                    Byte count = (byte)a4[i];
+                    byte charges = (byte)0;
+                    harvestableHandler.AddHarvestable(id, type, tier, posX, posY, charges, count);
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("eL: " + e.ToString());
+            }
+        }
         private void onNewHarvestableObject(Dictionary<byte, object> parameters)
         {
            // Console.WriteLine("onNewHarvestableObject");
@@ -147,6 +219,9 @@ namespace AlbionRadaro
         private void onLeave(Dictionary<byte, object> parameters)
         {
 
+            /*
+             onLeave contains strange data. It should delete Harvestable + Players + Monsters. But its sketchy.
+             */
              int id = int.Parse(parameters[0].ToString());
            //  if (harvestableHandler.RemoveHarvestable(id))
            //      Console.WriteLine("Removed harvestable: " + id);
@@ -157,77 +232,6 @@ namespace AlbionRadaro
             // else
             //     Console.WriteLine("None removed: " + id);
             
-        }
-        private void onNewSimpleHarvestableObjectList(Dictionary<byte, object> parameters)
-        {
-            //return;
-            foreach (KeyValuePair<byte, object> kvp in parameters)
-                Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
-            
-            List<int> a0 = new List<int>();
-            if (parameters[0].GetType() == typeof(Byte[]))
-            {
-                Byte[] typeListByte = (Byte[])parameters[0]; //list of types
-                foreach (Byte b in typeListByte)
-                    a0.Add(b);
-            }
-            else if (parameters[0].GetType() == typeof(Int16[]))
-            {
-                Int16[] typeListByte = (Int16[])parameters[0]; //list of types
-                foreach (Int16 b in typeListByte)
-                    a0.Add(b);
-            }
-            else
-            {
-                Console.WriteLine("onNewSimpleHarvestableObjectList type error: " + parameters[0].GetType());
-                return;
-            }
-            try {
-                /*
-                Key = 0, Value = System.Int16[] //id
-                Key = 1, Value = System.Byte[] // type WOOD etc
-                Key = 2, Value = System.Byte[] // tier
-                Key = 3, Value = System.Single[] //location
-                Key = 4, Value = System.Byte[] // size
-                Key = 252, Value = 29
-                 */
-                Byte[] a1 = (Byte[])parameters[1]; //list of types
-            Byte[] a2 = (Byte[])parameters[2]; //list of tiers
-            Single[] a3 = (Single[])parameters[3]; //list of positions X1, Y1, X2, Y2 ...
-            Byte[] a4 = (Byte[])parameters[4]; //size
-
-            for (int i = 0; i < a0.Count; i++)
-            {
-                int id = (int)a0.ElementAt(i);
-                byte type = (byte)a1[i];
-                byte tier = (byte)a2[i];
-                Single posX = (Single) a3[i*2];
-                Single posY = (Single) a3[i*2+1];
-                Byte count = (byte)a4[i];
-                byte charges = (byte)0;
-                harvestableHandler.AddHarvestable(id, type, tier, posX, posY, charges, count);
-            }
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("eL: " + e.ToString());
-            }
-        }
-        public void OnResponse(byte operationCode, short returnCode, Dictionary<byte, object> parameters)
-        {
-        //    Console.WriteLine("OnResponse: " + operationCode + " returnCode: " + returnCode);
-        }
-        public void OnRequest(byte operationCode, Dictionary<byte, object> parameters)
-        {
-             OperationCodes code = (OperationCodes)parameters[253];
-             //Console.WriteLine("OnRequest: " + code);
-             switch (code)
-             {
-                case OperationCodes.Move:
-                     onLocalPlayerMovement(parameters);
-                break;
-             }
         }
         private void onLocalPlayerMovement(Dictionary<byte, object> parameters)
         {
