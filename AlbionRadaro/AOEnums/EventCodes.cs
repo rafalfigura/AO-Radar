@@ -8,6 +8,7 @@ namespace AlbionRadaro
 {
     public enum EventCodes
     {
+        None = 0,
         Leave = 1,
         JoinFinished = 2,
         Move = 3,

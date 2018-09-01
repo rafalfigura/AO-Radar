@@ -27,9 +27,13 @@ namespace AlbionRadaro
 
             object val;
             parameters.TryGetValue((byte)252, out val);
-            EventCodes eventCode = (EventCodes)val;
             if (val == null) return;
-              Console.WriteLine("Event: " + eventCode);
+
+            int iCode = 0;
+            if(!int.TryParse(val.ToString(), out iCode)) return;
+
+            EventCodes eventCode = (EventCodes)iCode;
+
 
             switch (eventCode)
             {
@@ -52,6 +56,7 @@ namespace AlbionRadaro
                     onLeave(parameters);
                     break;
                 case EventCodes.NewMob:
+                    Console.WriteLine("Event: " + eventCode);
                     onNewMob(parameters);
                     break;
                 case EventCodes.JoinFinished:
@@ -66,7 +71,11 @@ namespace AlbionRadaro
         }
         public void OnRequest(byte operationCode, Dictionary<byte, object> parameters)
         {
-            OperationCodes code = (OperationCodes)parameters[253];
+            //OperationCodes code = (OperationCodes)parameters[253];
+            int iCode = 0;
+            if (!int.TryParse(parameters[253].ToString(), out iCode)) return;
+            OperationCodes code = (OperationCodes)iCode;
+
             //Console.WriteLine("OnRequest: " + code);
             switch (code)
             {
@@ -100,8 +109,8 @@ namespace AlbionRadaro
                 Key = 20, Value = 261954
                 Key = 252, Value = 106
              */
-            //foreach (KeyValuePair<byte, object> kvp in parameters)
-            // Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+            foreach (KeyValuePair<byte, object> kvp in parameters)
+             Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
         }
         private void onNewSimpleHarvestableObjectList(Dictionary<byte, object> parameters)
         {
@@ -259,7 +268,11 @@ namespace AlbionRadaro
 
             int id = int.Parse(parameters[0].ToString());
             string nick = parameters[1].ToString();
-            string guild = parameters[8].ToString();
+            object oGuild = "";
+            parameters.TryGetValue((byte)8, out oGuild);
+            string guild = oGuild == null ? "" : oGuild.ToString();
+
+            //string guild = parameters[8].ToString() || null;
             string alliance = parameters[44].ToString();
 
             Single[] a13 = (Single[])parameters[13]; //pos1
