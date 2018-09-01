@@ -91,7 +91,9 @@ namespace AlbionRadaro
                     HEIGHT = mapForm.pictureBox1.Height;
                     WIDTH = mapForm.pictureBox1.Height;
                     Bitmap bitmap = new Bitmap(WIDTH, HEIGHT);
-
+                    Console.WriteLine("bitmap.HorizontalResolution: " + bitmap.HorizontalResolution);
+                    Console.WriteLine("bitmap.VerticalResolution: " + bitmap.VerticalResolution);
+                    bitmap.SetResolution(100, 100);
                     Single lpX;
                     Single lpY;
                     Font font = new Font("Arial", 11, FontStyle.Bold);

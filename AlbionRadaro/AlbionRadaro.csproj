@@ -41,10 +41,6 @@
     <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Albion.Common">
-      <HintPath>..\..\..\..\..\Desktop\Albion.Common.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
     <Reference Include="PcapDotNet.Base">
       <HintPath>..\..\..\..\..\Desktop\PcapDotNet.Binaries.1.0.4.x86\PcapDotNet.Base.dll</HintPath>
       <Private>True</Private>
@@ -78,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventCodes.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +92,7 @@
       <DependentUpon>MapForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MouseClickMessageFilter.cs" />
+    <Compile Include="OperationCodes.cs" />
     <Compile Include="PacketHandler.cs" />
     <Compile Include="PhotonPacketHandler.cs" />
     <Compile Include="Player.cs" />
