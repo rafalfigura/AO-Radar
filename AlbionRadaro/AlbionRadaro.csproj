@@ -84,6 +84,8 @@
     <Compile Include="Harvestable\Harvestable.cs" />
     <Compile Include="Harvestable\HarvestableHandler.cs" />
     <Compile Include="Harvestable\HarvestableType.cs" />
+    <Compile Include="Mobs\Mob.cs" />
+    <Compile Include="Mobs\MobsHandler.cs" />
     <Compile Include="PhotonPacketHandler\IPhotonEventHandler.cs" />
     <Compile Include="MapForm.cs">
       <SubType>Form</SubType>
@@ -131,6 +133,7 @@
   <ItemGroup>
     <Content Include="favicon.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

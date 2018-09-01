@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using AlbionRadaro.Mobs;
 
 namespace AlbionRadaro
 {
@@ -11,11 +12,13 @@ namespace AlbionRadaro
     {
         PlayerHandler playerHandler;
         HarvestableHandler harvestableHandler;
+        MobsHandler mobsHandler;
 
-        public PacketHandler(PlayerHandler playerHandler, HarvestableHandler harvestableHandler)
+        public PacketHandler(PlayerHandler playerHandler, HarvestableHandler harvestableHandler, MobsHandler mobsHandler)
         {
             this.playerHandler = playerHandler;
             this.harvestableHandler = harvestableHandler;
+            this.mobsHandler = mobsHandler;
         }
         public void OnEvent(byte code, Dictionary<byte, object> parameters)
         {
@@ -35,6 +38,7 @@ namespace AlbionRadaro
             EventCodes eventCode = (EventCodes)iCode;
 
 
+            Console.WriteLine("Event: " + eventCode);
             switch (eventCode)
             {
                 case EventCodes.HarvestableChangeState:
@@ -56,15 +60,22 @@ namespace AlbionRadaro
                     onLeave(parameters);
                     break;
                 case EventCodes.NewMob:
-                    Console.WriteLine("Event: " + eventCode);
                     onNewMob(parameters);
                     break;
                 case EventCodes.JoinFinished:
                     onJoinFinished(parameters);
                     break;
+                case EventCodes.InCombatStateUpdate:
+                    onInCombatStateUpdate(parameters);
+                    break;
+                case EventCodes.CastSpell:
+                    onCastSpell(parameters);
+                    break;
                 default: break;
             }
         }
+
+
         public void OnResponse(byte operationCode, short returnCode, Dictionary<byte, object> parameters)
         {
             //    Console.WriteLine("OnResponse: " + operationCode + " returnCode: " + returnCode);
@@ -85,7 +96,17 @@ namespace AlbionRadaro
             }
         }
 
+        private void onCastSpell(Dictionary<byte, object> parameters)
+        {
+            foreach (KeyValuePair<byte, object> kvp in parameters)
+                Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+        }
 
+        private void onInCombatStateUpdate(Dictionary<byte, object> parameters)
+        {
+            foreach (KeyValuePair<byte, object> kvp in parameters)
+                Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+        }
         private void onJoinFinished(Dictionary<byte, object> parameters)
         {
             this.harvestableHandler.HarvestableList.Clear();
@@ -94,29 +115,39 @@ namespace AlbionRadaro
         private void onNewMob(Dictionary<byte, object> parameters)
         {
             /*
-                Key = 0, Value = 7987
-                Key = 1, Value = 44
+                Key = 0, Value = 7987 //obj id
+                Key = 1, Value = 44 //type id
                 Key = 2, Value = 255
                 Key = 6, Value =
-                Key = 7, Value = System.Single[]
-                Key = 8, Value = System.Single[]
+                Key = 7, Value = System.Single[]//pos
+                Key = 8, Value = System.Single[] //pos target
                 Key = 9, Value = 35362072
                 Key = 10, Value = 6,401981
                 Key = 11, Value = 3
-                Key = 13, Value = 20
+                Key = 13, Value = 20 //health
                 Key = 14, Value = 20
                 Key = 16, Value = 35254961
                 Key = 20, Value = 261954
                 Key = 252, Value = 106
+                [0] objectId
+                [1] typeId
+                [8] moveTarget
+                [13] Health
              */
-            foreach (KeyValuePair<byte, object> kvp in parameters)
-             Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+            int id = int.Parse(parameters[0].ToString());
+            int typeId = int.Parse(parameters[1].ToString());
+            Single[] loc = (Single[])parameters[8];
+            Single posX = (Single)loc[0];
+            Single posY = (Single)loc[1];
+            int health = int.Parse(parameters[13].ToString());
+
+            mobsHandler.AddMob(id, typeId, posX, posY, health);
         }
         private void onNewSimpleHarvestableObjectList(Dictionary<byte, object> parameters)
         {
             //return;
-            foreach (KeyValuePair<byte, object> kvp in parameters)
-                Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+           // foreach (KeyValuePair<byte, object> kvp in parameters)
+            //    Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
 
             List<int> a0 = new List<int>();
             if (parameters[0].GetType() == typeof(Byte[]))

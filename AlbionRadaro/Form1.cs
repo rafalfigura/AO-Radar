@@ -1,4 +1,5 @@
-﻿using PcapDotNet.Core;
+﻿using AlbionRadaro.Mobs;
+using PcapDotNet.Core;
 using PcapDotNet.Packets;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,8 @@ namespace AlbionRadaro
 
         PlayerHandler playerHandler = new PlayerHandler();
         HarvestableHandler harvestableHandler = new HarvestableHandler();
+        MobsHandler mobsHandler = new MobsHandler();
+
         MapForm mapForm = new MapForm();
 
         public Form1()
@@ -57,7 +60,7 @@ namespace AlbionRadaro
             updateSettings();
             try
             {
-                _eventHandler = new PacketHandler(playerHandler, harvestableHandler);
+                _eventHandler = new PacketHandler(playerHandler, harvestableHandler, mobsHandler);
                 photonPacketHandler = new PhotonPacketHandler(_eventHandler);
 
                 Thread t = new Thread(() =>
@@ -87,6 +90,8 @@ namespace AlbionRadaro
                         };
                     Pen playerPen = new Pen(Color.Red, 2f);
                     Brush playerBrush = Brushes.Red;
+                    Brush mobBrush = Brushes.Black;
+
                     int HEIGHT, WIDTH, MULTIPLER = 4;
                     HEIGHT = mapForm.pictureBox1.Height;
                     WIDTH = mapForm.pictureBox1.Height;
@@ -100,6 +105,20 @@ namespace AlbionRadaro
                     while (true)
                     {
 
+                        using (Graphics g = Graphics.FromImage(bitmap)){
+                            g.Clear(Color.Transparent);
+                            lpX = playerHandler.localPlayerPosX() * MULTIPLER;
+                            lpY = playerHandler.localPlayerPosY() * MULTIPLER;
+                            g.InterpolationMode = InterpolationMode.NearestNeighbor;
+                            g.TranslateTransform(WIDTH / 2, HEIGHT / 2);
+
+                            g.FillEllipse(Brushes.Black, -2, -2, 4, 4);
+                            g.DrawEllipse(linePen, -80, -80, 160, 160);
+                            g.DrawEllipse(linePen, -170, -170, 340, 340);
+                            g.DrawEllipse(linePen, -WIDTH / 2, -HEIGHT / 2, WIDTH - 1, HEIGHT - 1);
+
+                        }
+                        mapForm.pictureBox1.Image = RotateImage(bitmap, -45f);
                         using (Graphics g = Graphics.FromImage(bitmap))
                         {
                             g.Clear(Color.Transparent);
@@ -125,6 +144,26 @@ namespace AlbionRadaro
                                     //TODO - there is thread conflict. From time to time there is exception // maybe thread safe list?
                                 }
                             }
+
+                            foreach (Harvestable h in hLis)
+                            {
+                                SizeF sizeOfMapInfo = g.MeasureString(h.getMapInfo(), font);
+
+                                float imagePosX = h.PosX * MULTIPLER - lpX - (sizeOfMapInfo.Width / 2) - (sizeOfMapInfo.Width / 2);
+                                float imagePosY = h.PosY * MULTIPLER - lpY - (sizeOfMapInfo.Width / 2) - (sizeOfMapInfo.Height / 2);
+
+                                g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                                g.FillEllipse(Brushes.Black, h.PosX * MULTIPLER - 10 - lpX + 2, h.PosY * MULTIPLER - 10 - lpY + 7, 20, 20);
+
+                                //g.DrawImage(b, imagePosX, imagePosY);
+
+                                if (h.Charges == 1) g.DrawEllipse(chargePen[0], h.PosX * MULTIPLER - 10 - lpX + 2, h.PosY * MULTIPLER - 10 - lpY + 7, 20, 20);
+                                else if (h.Charges == 2) g.DrawEllipse(chargePen[1], h.PosX * MULTIPLER - 12 - lpX + 2, h.PosY * MULTIPLER - 12 - lpY + 7, 24, 24);
+                                else if (h.Charges == 3) g.DrawEllipse(chargePen[2], h.PosX * MULTIPLER - 14 - lpX + 2, h.PosY * MULTIPLER - 14 - lpY + 7, 28, 28);
+
+                            }
+
+
                             foreach (Harvestable h in hLis)
                             {
                                 if (!Settings.IsInTiers(h.Tier)) continue;
@@ -160,6 +199,24 @@ namespace AlbionRadaro
                                 else if (h.Charges == 3) g.DrawEllipse(chargePen[2], h.PosX * MULTIPLER - 14 - lpX + 2, h.PosY * MULTIPLER - 14 - lpY + 7, 28, 28);
 
                             }
+
+
+                            /*  List<Mob> mList = new List<Mob>();
+                              lock (mobsHandler.MobList)
+                              {
+                                  try
+                                  {
+                                      mList = this.mobsHandler.MobList.ToList();
+                                  }
+                                  catch (Exception e1)
+                                  {
+                                      //TODO - there is thread conflict. From time to time there is exception // maybe thread safe list?
+                                  }
+                              }
+                              foreach (Mob m in mList)
+                                  g.FillEllipse(mobBrush, m.PosX * MULTIPLER - 3 - lpX, m.PosY * MULTIPLER - 3 - lpY, 6, 6);
+                            
+                              */
                             if (Settings.DisplayPeople)
                             {
                                 List<Player> pLis = new List<Player>();
@@ -184,7 +241,7 @@ namespace AlbionRadaro
                             mapForm.pictureBox1.Image = RotateImage(bitmap, -45f);
 
                         }
-                        Thread.Sleep(100);
+                      //  Thread.Sleep(100);
                     }
                 });
                 d.Start();

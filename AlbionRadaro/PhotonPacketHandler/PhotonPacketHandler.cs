@@ -21,6 +21,7 @@ namespace AlbionRadaro
         }
         public void PacketHandler(Packet packet)
         {
+            try { 
                 // Make this static or at least dont create a new Protocol16 for every package
                 Protocol16 protocol16 = new Protocol16();
 
@@ -44,6 +45,7 @@ namespace AlbionRadaro
 
                 for (int commandIdx = 0; commandIdx < commandCount; commandIdx++)
                 {
+                    
                     var commandType = p.ReadByte();
                     var channelId = p.ReadByte();
                     var commandFlags = p.ReadByte();
@@ -91,6 +93,11 @@ namespace AlbionRadaro
                             break;
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("PackeHandler Exception: " + e.ToString());
+            }
         }
     }
 

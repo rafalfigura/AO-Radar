@@ -20,7 +20,7 @@ namespace AlbionRadaro
             Harvestable h = new Harvestable(id, type, tier, posX, posY, charges, size);
             if (!harvestableList.Contains(h)) { 
                 harvestableList.Add(h);
-                Console.WriteLine("New Harvestable: " + h.ToString());
+               // Console.WriteLine("New Harvestable: " + h.ToString());
             }
         }
         public bool RemoveHarvestable(int id)
