@@ -2,7 +2,7 @@
 
 Albion Online Player and Harvestable Radar
 
-### Getting Started
+## Getting Started
 
 * Download project as source code with git
 ```
@@ -10,14 +10,15 @@ git clone https://github.com/rafalfigura/AO-Radar.git
 
 ```
 * Launch AlbionRadaro.sln
-* Update Albion Online dlls - you can find them in 
+* Get libs from NuGet
+* Update **Photon3DotNet.dll** witch can be found in 
 ```
 game_dir\game\Albion-Online_Data\Managed
 ```
- or in libs folder
+
 * Compile and Have Fun
 
-### Features
+## Features
   [Look at those images](https://imgur.com/a/xRBWGvx)
   
   * Player radar
@@ -25,25 +26,25 @@ game_dir\game\Albion-Online_Data\Managed
   * Map on top of game
 
   
-### Requirements
+## Requirements
 
 
-## WinPcap
+# WinPcap
 This library requires [WinPcap](https://www.winpcap.org/) which comes with [Wireshark](https://www.wireshark.org/).
 
-## Photon
+# Photon
 Since it's using Photon you also need to download and link [Photon3DotNet.dll](https://www.photonengine.com/sdks#client-csharp).<br />
 Alternatively you can also just link `Photon3Unity3D.dll` if you have a Unity based game.
 
 
-### Troubleshooting
+## Troubleshooting
 
 > System.InvalidOperationException 
 
 Try to reinstall winpcap - thats main reason for that error 
 Use [this](https://github.com/PcapDotNet/Pcap.Net/wiki/Using-Pcap.Net-in-your-programs) for setup.
 
-### Albion Online Version
+## Albion Online Version
 
 This project is for Albion Online 1.12.365. May not work with other releases.
 
