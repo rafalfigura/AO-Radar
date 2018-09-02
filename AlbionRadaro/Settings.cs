@@ -13,6 +13,13 @@ namespace AlbionRadaro
         static bool onlyRares = false;
         static bool displayPeople = true;
         static bool soundsOnPlayer = false;
+        static bool livingEntities = false;
+
+        public static bool LivingEntities
+        {
+            get { return Settings.livingEntities; }
+            set { Settings.livingEntities = value; }
+        }
         public static void saveSettings(Form1 form){
             AppSettings s = new AppSettings();
 
@@ -42,7 +49,7 @@ namespace AlbionRadaro
             s.rOre       = form.cbOre.Checked;
             s.rAnimal    = form.cbAnimal.Checked;
             s.rRock      = form.cbRock.Checked;
-            s.rElemental = form.cbElemental.Checked;
+            s.rElemental = form.cbEntities.Checked;
             s.rMob       = form.cbMob.Checked;
             s.rTreasures = form.cbTreasures.Checked;
             s.rSoundOnPlayer = form.cbSounds.Checked;
@@ -78,7 +85,7 @@ namespace AlbionRadaro
             form.cbOre.Checked       = s.rOre ;     
             form.cbAnimal.Checked    = s.rAnimal  ; 
             form.cbRock.Checked      = s.rRock ;    
-            form.cbElemental.Checked = s.rElemental;
+            form.cbEntities.Checked = s.rElemental;
             form.cbMob.Checked       = s.rMob      ;
             form.cbTreasures.Checked = s.rTreasures;
             form.cbSounds.Checked = s.rSoundOnPlayer;
@@ -148,6 +155,11 @@ namespace AlbionRadaro
         internal static void setSoundsOnPlayer(bool p)
         {
             soundsOnPlayer = p;
+        }
+
+        internal static void showEntities(bool p)
+        {
+            livingEntities = p;
         }
     }
 }

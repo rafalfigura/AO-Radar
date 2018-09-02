@@ -31,7 +31,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.cbTreasures = new System.Windows.Forms.CheckBox();
             this.cbMob = new System.Windows.Forms.CheckBox();
-            this.cbElemental = new System.Windows.Forms.CheckBox();
+            this.cbEntities = new System.Windows.Forms.CheckBox();
             this.cbRock = new System.Windows.Forms.CheckBox();
             this.cbAnimal = new System.Windows.Forms.CheckBox();
             this.cbOre = new System.Windows.Forms.CheckBox();
@@ -51,24 +51,24 @@
             this.cbTier70 = new System.Windows.Forms.CheckBox();
             this.cbTier80 = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.cbTier43 = new System.Windows.Forms.CheckBox();
             this.cbTier42 = new System.Windows.Forms.CheckBox();
             this.cbTier41 = new System.Windows.Forms.CheckBox();
-            this.cbTier53 = new System.Windows.Forms.CheckBox();
-            this.cbTier52 = new System.Windows.Forms.CheckBox();
-            this.cbTier51 = new System.Windows.Forms.CheckBox();
-            this.cbTier63 = new System.Windows.Forms.CheckBox();
-            this.cbTier62 = new System.Windows.Forms.CheckBox();
-            this.cbTier61 = new System.Windows.Forms.CheckBox();
-            this.cbTier73 = new System.Windows.Forms.CheckBox();
-            this.cbTier72 = new System.Windows.Forms.CheckBox();
-            this.cbTier71 = new System.Windows.Forms.CheckBox();
             this.cbTier83 = new System.Windows.Forms.CheckBox();
             this.cbTier82 = new System.Windows.Forms.CheckBox();
+            this.cbTier73 = new System.Windows.Forms.CheckBox();
+            this.cbTier72 = new System.Windows.Forms.CheckBox();
+            this.cbTier63 = new System.Windows.Forms.CheckBox();
+            this.cbTier62 = new System.Windows.Forms.CheckBox();
+            this.cbTier53 = new System.Windows.Forms.CheckBox();
+            this.cbTier52 = new System.Windows.Forms.CheckBox();
             this.cbTier81 = new System.Windows.Forms.CheckBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.cbTier71 = new System.Windows.Forms.CheckBox();
+            this.cbTier61 = new System.Windows.Forms.CheckBox();
+            this.cbTier51 = new System.Windows.Forms.CheckBox();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -78,7 +78,7 @@
             // 
             this.groupBox2.Controls.Add(this.cbTreasures);
             this.groupBox2.Controls.Add(this.cbMob);
-            this.groupBox2.Controls.Add(this.cbElemental);
+            this.groupBox2.Controls.Add(this.cbEntities);
             this.groupBox2.Controls.Add(this.cbRock);
             this.groupBox2.Controls.Add(this.cbAnimal);
             this.groupBox2.Controls.Add(this.cbOre);
@@ -116,17 +116,16 @@
             this.cbMob.UseVisualStyleBackColor = true;
             this.cbMob.CheckedChanged += new System.EventHandler(this.harvestableCheckChange);
             // 
-            // cbElemental
+            // cbEntities
             // 
-            this.cbElemental.AutoSize = true;
-            this.cbElemental.Enabled = false;
-            this.cbElemental.Location = new System.Drawing.Point(73, 42);
-            this.cbElemental.Name = "cbElemental";
-            this.cbElemental.Size = new System.Drawing.Size(72, 17);
-            this.cbElemental.TabIndex = 5;
-            this.cbElemental.Text = "Elemental";
-            this.cbElemental.UseVisualStyleBackColor = true;
-            this.cbElemental.CheckedChanged += new System.EventHandler(this.harvestableCheckChange);
+            this.cbEntities.AutoSize = true;
+            this.cbEntities.Location = new System.Drawing.Point(73, 42);
+            this.cbEntities.Name = "cbEntities";
+            this.cbEntities.Size = new System.Drawing.Size(60, 17);
+            this.cbEntities.TabIndex = 5;
+            this.cbEntities.Text = "Entities";
+            this.cbEntities.UseVisualStyleBackColor = true;
+            this.cbEntities.CheckedChanged += new System.EventHandler(this.harvestableCheckChange);
             // 
             // cbRock
             // 
@@ -371,6 +370,33 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Tiers";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(81, 37);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(16, 13);
+            this.label5.TabIndex = 45;
+            this.label5.Text = ".3";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(60, 37);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(16, 13);
+            this.label4.TabIndex = 44;
+            this.label4.Text = ".2";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(39, 37);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(16, 13);
+            this.label3.TabIndex = 19;
+            this.label3.Text = ".1";
+            // 
             // cbTier43
             // 
             this.cbTier43.AutoSize = true;
@@ -397,59 +423,23 @@
             this.cbTier41.Size = new System.Drawing.Size(15, 14);
             this.cbTier41.TabIndex = 29;
             // 
-            // cbTier53
+            // cbTier83
             // 
-            this.cbTier53.AutoSize = true;
-            this.cbTier53.Location = new System.Drawing.Point(82, 79);
-            this.cbTier53.Name = "cbTier53";
-            this.cbTier53.Size = new System.Drawing.Size(15, 14);
-            this.cbTier53.TabIndex = 34;
-            this.cbTier53.UseVisualStyleBackColor = true;
+            this.cbTier83.AutoSize = true;
+            this.cbTier83.Location = new System.Drawing.Point(82, 139);
+            this.cbTier83.Name = "cbTier83";
+            this.cbTier83.Size = new System.Drawing.Size(15, 14);
+            this.cbTier83.TabIndex = 43;
+            this.cbTier83.UseVisualStyleBackColor = true;
             // 
-            // cbTier52
+            // cbTier82
             // 
-            this.cbTier52.AutoSize = true;
-            this.cbTier52.Location = new System.Drawing.Point(61, 79);
-            this.cbTier52.Name = "cbTier52";
-            this.cbTier52.Size = new System.Drawing.Size(15, 14);
-            this.cbTier52.TabIndex = 33;
-            this.cbTier52.UseVisualStyleBackColor = true;
-            // 
-            // cbTier51
-            // 
-            this.cbTier51.AutoSize = true;
-            this.cbTier51.Location = new System.Drawing.Point(40, 79);
-            this.cbTier51.Name = "cbTier51";
-            this.cbTier51.Size = new System.Drawing.Size(15, 14);
-            this.cbTier51.TabIndex = 32;
-            this.cbTier51.UseVisualStyleBackColor = true;
-            // 
-            // cbTier63
-            // 
-            this.cbTier63.AutoSize = true;
-            this.cbTier63.Location = new System.Drawing.Point(82, 99);
-            this.cbTier63.Name = "cbTier63";
-            this.cbTier63.Size = new System.Drawing.Size(15, 14);
-            this.cbTier63.TabIndex = 37;
-            this.cbTier63.UseVisualStyleBackColor = true;
-            // 
-            // cbTier62
-            // 
-            this.cbTier62.AutoSize = true;
-            this.cbTier62.Location = new System.Drawing.Point(61, 99);
-            this.cbTier62.Name = "cbTier62";
-            this.cbTier62.Size = new System.Drawing.Size(15, 14);
-            this.cbTier62.TabIndex = 36;
-            this.cbTier62.UseVisualStyleBackColor = true;
-            // 
-            // cbTier61
-            // 
-            this.cbTier61.AutoSize = true;
-            this.cbTier61.Location = new System.Drawing.Point(40, 99);
-            this.cbTier61.Name = "cbTier61";
-            this.cbTier61.Size = new System.Drawing.Size(15, 14);
-            this.cbTier61.TabIndex = 35;
-            this.cbTier61.UseVisualStyleBackColor = true;
+            this.cbTier82.AutoSize = true;
+            this.cbTier82.Location = new System.Drawing.Point(61, 139);
+            this.cbTier82.Name = "cbTier82";
+            this.cbTier82.Size = new System.Drawing.Size(15, 14);
+            this.cbTier82.TabIndex = 42;
+            this.cbTier82.UseVisualStyleBackColor = true;
             // 
             // cbTier73
             // 
@@ -469,32 +459,41 @@
             this.cbTier72.TabIndex = 39;
             this.cbTier72.UseVisualStyleBackColor = true;
             // 
-            // cbTier71
+            // cbTier63
             // 
-            this.cbTier71.AutoSize = true;
-            this.cbTier71.Location = new System.Drawing.Point(40, 119);
-            this.cbTier71.Name = "cbTier71";
-            this.cbTier71.Size = new System.Drawing.Size(15, 14);
-            this.cbTier71.TabIndex = 38;
-            this.cbTier71.UseVisualStyleBackColor = true;
+            this.cbTier63.AutoSize = true;
+            this.cbTier63.Location = new System.Drawing.Point(82, 99);
+            this.cbTier63.Name = "cbTier63";
+            this.cbTier63.Size = new System.Drawing.Size(15, 14);
+            this.cbTier63.TabIndex = 37;
+            this.cbTier63.UseVisualStyleBackColor = true;
             // 
-            // cbTier83
+            // cbTier62
             // 
-            this.cbTier83.AutoSize = true;
-            this.cbTier83.Location = new System.Drawing.Point(82, 139);
-            this.cbTier83.Name = "cbTier83";
-            this.cbTier83.Size = new System.Drawing.Size(15, 14);
-            this.cbTier83.TabIndex = 43;
-            this.cbTier83.UseVisualStyleBackColor = true;
+            this.cbTier62.AutoSize = true;
+            this.cbTier62.Location = new System.Drawing.Point(61, 99);
+            this.cbTier62.Name = "cbTier62";
+            this.cbTier62.Size = new System.Drawing.Size(15, 14);
+            this.cbTier62.TabIndex = 36;
+            this.cbTier62.UseVisualStyleBackColor = true;
             // 
-            // cbTier82
+            // cbTier53
             // 
-            this.cbTier82.AutoSize = true;
-            this.cbTier82.Location = new System.Drawing.Point(61, 139);
-            this.cbTier82.Name = "cbTier82";
-            this.cbTier82.Size = new System.Drawing.Size(15, 14);
-            this.cbTier82.TabIndex = 42;
-            this.cbTier82.UseVisualStyleBackColor = true;
+            this.cbTier53.AutoSize = true;
+            this.cbTier53.Location = new System.Drawing.Point(82, 79);
+            this.cbTier53.Name = "cbTier53";
+            this.cbTier53.Size = new System.Drawing.Size(15, 14);
+            this.cbTier53.TabIndex = 34;
+            this.cbTier53.UseVisualStyleBackColor = true;
+            // 
+            // cbTier52
+            // 
+            this.cbTier52.AutoSize = true;
+            this.cbTier52.Location = new System.Drawing.Point(61, 79);
+            this.cbTier52.Name = "cbTier52";
+            this.cbTier52.Size = new System.Drawing.Size(15, 14);
+            this.cbTier52.TabIndex = 33;
+            this.cbTier52.UseVisualStyleBackColor = true;
             // 
             // cbTier81
             // 
@@ -505,32 +504,32 @@
             this.cbTier81.TabIndex = 41;
             this.cbTier81.UseVisualStyleBackColor = true;
             // 
-            // label3
+            // cbTier71
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(39, 37);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(16, 13);
-            this.label3.TabIndex = 19;
-            this.label3.Text = ".1";
+            this.cbTier71.AutoSize = true;
+            this.cbTier71.Location = new System.Drawing.Point(40, 119);
+            this.cbTier71.Name = "cbTier71";
+            this.cbTier71.Size = new System.Drawing.Size(15, 14);
+            this.cbTier71.TabIndex = 38;
+            this.cbTier71.UseVisualStyleBackColor = true;
             // 
-            // label4
+            // cbTier61
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(60, 37);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(16, 13);
-            this.label4.TabIndex = 44;
-            this.label4.Text = ".2";
+            this.cbTier61.AutoSize = true;
+            this.cbTier61.Location = new System.Drawing.Point(40, 99);
+            this.cbTier61.Name = "cbTier61";
+            this.cbTier61.Size = new System.Drawing.Size(15, 14);
+            this.cbTier61.TabIndex = 35;
+            this.cbTier61.UseVisualStyleBackColor = true;
             // 
-            // label5
+            // cbTier51
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(81, 37);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(16, 13);
-            this.label5.TabIndex = 45;
-            this.label5.Text = ".3";
+            this.cbTier51.AutoSize = true;
+            this.cbTier51.Location = new System.Drawing.Point(40, 79);
+            this.cbTier51.Name = "cbTier51";
+            this.cbTier51.Size = new System.Drawing.Size(15, 14);
+            this.cbTier51.TabIndex = 32;
+            this.cbTier51.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -569,7 +568,7 @@
         public System.Windows.Forms.GroupBox groupBox2;
         public System.Windows.Forms.CheckBox cbTreasures;
         public System.Windows.Forms.CheckBox cbMob;
-        public System.Windows.Forms.CheckBox cbElemental;
+        public System.Windows.Forms.CheckBox cbEntities;
         public System.Windows.Forms.CheckBox cbRock;
         public System.Windows.Forms.CheckBox cbAnimal;
         public System.Windows.Forms.CheckBox cbOre;

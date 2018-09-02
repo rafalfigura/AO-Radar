@@ -148,11 +148,11 @@ namespace AlbionRadaro
                         Single hY = h.PosY - lpY;
 
                         g.FillEllipse(Brushes.Black, (float)(hX - 2.5f), (float)(hY - 2.5f), 5f, 5f);
-                         g.TranslateTransform(hX, hY);
-                          g.RotateTransform(135f);
-                          g.DrawString(h.getMapInfo(), font, Brushes.Red, -2.5f, -2.5f);
-                         g.RotateTransform(-135f);
-                         g.TranslateTransform(-hX, -hY);
+                        g.TranslateTransform(hX, hY);
+                        g.RotateTransform(135f);
+                        g.DrawString(h.getMapInfo(), font, harvestBrushes[h.Tier], -2.5f, -2.5f);
+                        g.RotateTransform(-135f);
+                        g.TranslateTransform(-hX, -hY);
 
 
                         if (h.Charges > 0) g.DrawEllipse(chargePen[h.Charges - 1], hX - 3, hY - 3, 6, 6);
@@ -172,20 +172,21 @@ namespace AlbionRadaro
                             g.FillEllipse(playerBrush, hX, hY, 4, 4);
                         }
                     }
+                    if (Settings.LivingEntities)
+                    { 
+                        List<Mob> mList = new List<Mob>();
+                        lock (mobsHandler.MobList){
+                            try{
+                                mList = this.mobsHandler.MobList.ToList();
+                            }catch (Exception e1){}
+                        }
 
-                    List<Mob> mList = new List<Mob>();
-                    lock (mobsHandler.MobList){
-                        try{
-                            mList = this.mobsHandler.MobList.ToList();
-                        }catch (Exception e1){}
+                        foreach (Mob m in mList) {
+                            Single hX = -1 * m.PosX + lpX;
+                            Single hY = m.PosY - lpY;
+                            g.FillEllipse(mobBrush, hX, hY, 3, 3);
+                        }
                     }
-
-                    foreach (Mob m in mList) {
-                        Single hX = -1 * m.PosX + lpX;
-                        Single hY = m.PosY - lpY;
-                        g.FillEllipse(mobBrush, hX, hY, 3, 3);
-                    }
-
                     mapForm.pictureBox2.Image = RotateImage(bitmap, 225f);
 
                     if (mapForm.pictureBox2.InvokeRequired)
@@ -442,6 +443,7 @@ namespace AlbionRadaro
             }, this.cbTreasures.Checked);
             Settings.setSoundsOnPlayer(cbSounds.Checked);
             Settings.saveSettings(this);
+            Settings.showEntities(this.cbEntities.Checked);
         }
         private void tierCheckChange(object sender, EventArgs e)
         {
