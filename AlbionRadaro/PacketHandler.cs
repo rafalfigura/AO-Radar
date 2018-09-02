@@ -8,7 +8,7 @@ using AlbionRadaro.Mobs;
 
 namespace AlbionRadaro
 {
-    class PacketHandler : IPhotonEventHandler
+    class PacketHandler : IPhotonPackageHandler
     {
         PlayerHandler playerHandler;
         HarvestableHandler harvestableHandler;
@@ -71,7 +71,6 @@ namespace AlbionRadaro
                 case EventCodes.CastSpell:
                     onCastSpell(parameters);
                     break;
-                    break;
                 default: break;
             }
         }
@@ -111,7 +110,7 @@ namespace AlbionRadaro
         private void onJoinFinished(Dictionary<byte, object> parameters)
         {
             this.harvestableHandler.HarvestableList.Clear();
-            this.playerHandler.PlayersInRange.Clear();
+           // this.playerHandler.PlayersInRange.Clear();
         }
         private void onNewMob(Dictionary<byte, object> parameters)
         {

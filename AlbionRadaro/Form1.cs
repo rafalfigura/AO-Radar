@@ -33,7 +33,7 @@ namespace AlbionRadaro
             InitializeComponent();
             mapForm.Show();
             Settings.loadSettings(this);
-
+            updateSettings();
             //harvestableHandler.HarvestableList.Add(new Harvestable(0, 0, 0, 100, 100, 0));
             // harvestableHandler.HarvestableList.Add(new Harvestable(0, 0, 0, 200, 200, 0));
             // harvestableHandler.HarvestableList.Add(new Harvestable(0, 0, 0, 100, 200, 0));
@@ -103,8 +103,8 @@ namespace AlbionRadaro
             Brush mobBrush = Brushes.Black;
 
             int HEIGHT, WIDTH, MULTIPLER = 4;
-            HEIGHT = mapForm.pictureBox1.Height;
-            WIDTH = mapForm.pictureBox1.Height;
+            HEIGHT = mapForm.pictureBox2.Height;
+            WIDTH = mapForm.pictureBox2.Height;
             Bitmap bitmap = new Bitmap(WIDTH, HEIGHT);
             bitmap.SetResolution(100, 100);
             Single lpX;
@@ -147,10 +147,10 @@ namespace AlbionRadaro
                         Single hX = -1* h.PosX + lpX;
                         Single hY = h.PosY - lpY;
 
-                        g.FillEllipse(Brushes.Black, (float)(hX - 2.5f), (float)(hY - 2.5f), 5f, 5f);
+                        g.FillEllipse(harvestBrushes[h.Tier], (float)(hX - 2.5f), (float)(hY - 2.5f), 5f, 5f);
                         g.TranslateTransform(hX, hY);
                         g.RotateTransform(135f);
-                        g.DrawString(h.getMapInfo(), font, harvestBrushes[h.Tier], -2.5f, -2.5f);
+                        g.DrawString(h.getMapInfo(), font, Brushes.White/*harvestBrushes[h.Tier]*/, -2.5f, -2.5f);
                         g.RotateTransform(-135f);
                         g.TranslateTransform(-hX, -hY);
 
@@ -442,8 +442,10 @@ namespace AlbionRadaro
                 HarvestableType.HIDE_SWAMP
             }, this.cbTreasures.Checked);
             Settings.setSoundsOnPlayer(cbSounds.Checked);
-            Settings.saveSettings(this);
             Settings.showEntities(this.cbEntities.Checked);
+
+
+            Settings.saveSettings(this);
         }
         private void tierCheckChange(object sender, EventArgs e)
         {

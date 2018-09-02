@@ -28,27 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
-            this.pictureBox1.MaximumSize = new System.Drawing.Size(500, 500);
-            this.pictureBox1.MinimumSize = new System.Drawing.Size(500, 500);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(500, 500);
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
             // 
             // pictureBox2
             // 
             this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox2.Location = new System.Drawing.Point(518, 12);
+            this.pictureBox2.Location = new System.Drawing.Point(-1, 0);
             this.pictureBox2.MaximumSize = new System.Drawing.Size(500, 500);
             this.pictureBox2.MinimumSize = new System.Drawing.Size(500, 500);
             this.pictureBox2.Name = "pictureBox2";
@@ -61,10 +48,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1034, 525);
+            this.ClientSize = new System.Drawing.Size(501, 502);
             this.ControlBox = false;
             this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.pictureBox1);
             this.ForeColor = System.Drawing.Color.Transparent;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -73,7 +59,6 @@
             this.ShowInTaskbar = false;
             this.Text = "MapForm";
             this.Load += new System.EventHandler(this.MapForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
 
@@ -81,7 +66,6 @@
 
         #endregion
 
-        public System.Windows.Forms.PictureBox pictureBox1;
         public System.Windows.Forms.PictureBox pictureBox2;
     }
 }

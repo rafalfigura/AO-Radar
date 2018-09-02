@@ -405,6 +405,7 @@
             this.cbTier43.Size = new System.Drawing.Size(15, 14);
             this.cbTier43.TabIndex = 31;
             this.cbTier43.UseVisualStyleBackColor = true;
+            this.cbTier43.CheckedChanged += new System.EventHandler(this.tierCheckChange);
             // 
             // cbTier42
             // 
@@ -414,6 +415,7 @@
             this.cbTier42.Size = new System.Drawing.Size(15, 14);
             this.cbTier42.TabIndex = 30;
             this.cbTier42.UseVisualStyleBackColor = true;
+            this.cbTier42.CheckedChanged += new System.EventHandler(this.tierCheckChange);
             // 
             // cbTier41
             // 
@@ -422,60 +424,79 @@
             this.cbTier41.Name = "cbTier41";
             this.cbTier41.Size = new System.Drawing.Size(15, 14);
             this.cbTier41.TabIndex = 29;
+            this.cbTier41.CheckedChanged += new System.EventHandler(this.tierCheckChange);
             // 
             // cbTier83
             // 
             this.cbTier83.AutoSize = true;
+            this.cbTier83.Checked = true;
+            this.cbTier83.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbTier83.Location = new System.Drawing.Point(82, 139);
             this.cbTier83.Name = "cbTier83";
             this.cbTier83.Size = new System.Drawing.Size(15, 14);
             this.cbTier83.TabIndex = 43;
             this.cbTier83.UseVisualStyleBackColor = true;
+            this.cbTier83.CheckedChanged += new System.EventHandler(this.tierCheckChange);
             // 
             // cbTier82
             // 
             this.cbTier82.AutoSize = true;
+            this.cbTier82.Checked = true;
+            this.cbTier82.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbTier82.Location = new System.Drawing.Point(61, 139);
             this.cbTier82.Name = "cbTier82";
             this.cbTier82.Size = new System.Drawing.Size(15, 14);
             this.cbTier82.TabIndex = 42;
             this.cbTier82.UseVisualStyleBackColor = true;
+            this.cbTier82.CheckedChanged += new System.EventHandler(this.tierCheckChange);
             // 
             // cbTier73
             // 
             this.cbTier73.AutoSize = true;
+            this.cbTier73.Checked = true;
+            this.cbTier73.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbTier73.Location = new System.Drawing.Point(82, 119);
             this.cbTier73.Name = "cbTier73";
             this.cbTier73.Size = new System.Drawing.Size(15, 14);
             this.cbTier73.TabIndex = 40;
             this.cbTier73.UseVisualStyleBackColor = true;
+            this.cbTier73.CheckedChanged += new System.EventHandler(this.tierCheckChange);
             // 
             // cbTier72
             // 
             this.cbTier72.AutoSize = true;
+            this.cbTier72.Checked = true;
+            this.cbTier72.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbTier72.Location = new System.Drawing.Point(61, 119);
             this.cbTier72.Name = "cbTier72";
             this.cbTier72.Size = new System.Drawing.Size(15, 14);
             this.cbTier72.TabIndex = 39;
             this.cbTier72.UseVisualStyleBackColor = true;
+            this.cbTier72.CheckedChanged += new System.EventHandler(this.tierCheckChange);
             // 
             // cbTier63
             // 
             this.cbTier63.AutoSize = true;
+            this.cbTier63.Checked = true;
+            this.cbTier63.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbTier63.Location = new System.Drawing.Point(82, 99);
             this.cbTier63.Name = "cbTier63";
             this.cbTier63.Size = new System.Drawing.Size(15, 14);
             this.cbTier63.TabIndex = 37;
             this.cbTier63.UseVisualStyleBackColor = true;
+            this.cbTier63.CheckedChanged += new System.EventHandler(this.tierCheckChange);
             // 
             // cbTier62
             // 
             this.cbTier62.AutoSize = true;
+            this.cbTier62.Checked = true;
+            this.cbTier62.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbTier62.Location = new System.Drawing.Point(61, 99);
             this.cbTier62.Name = "cbTier62";
             this.cbTier62.Size = new System.Drawing.Size(15, 14);
             this.cbTier62.TabIndex = 36;
             this.cbTier62.UseVisualStyleBackColor = true;
+            this.cbTier62.CheckedChanged += new System.EventHandler(this.tierCheckChange);
             // 
             // cbTier53
             // 
@@ -485,6 +506,7 @@
             this.cbTier53.Size = new System.Drawing.Size(15, 14);
             this.cbTier53.TabIndex = 34;
             this.cbTier53.UseVisualStyleBackColor = true;
+            this.cbTier53.CheckedChanged += new System.EventHandler(this.tierCheckChange);
             // 
             // cbTier52
             // 
@@ -494,24 +516,31 @@
             this.cbTier52.Size = new System.Drawing.Size(15, 14);
             this.cbTier52.TabIndex = 33;
             this.cbTier52.UseVisualStyleBackColor = true;
+            this.cbTier52.CheckedChanged += new System.EventHandler(this.tierCheckChange);
             // 
             // cbTier81
             // 
             this.cbTier81.AutoSize = true;
+            this.cbTier81.Checked = true;
+            this.cbTier81.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbTier81.Location = new System.Drawing.Point(40, 139);
             this.cbTier81.Name = "cbTier81";
             this.cbTier81.Size = new System.Drawing.Size(15, 14);
             this.cbTier81.TabIndex = 41;
             this.cbTier81.UseVisualStyleBackColor = true;
+            this.cbTier81.CheckedChanged += new System.EventHandler(this.tierCheckChange);
             // 
             // cbTier71
             // 
             this.cbTier71.AutoSize = true;
+            this.cbTier71.Checked = true;
+            this.cbTier71.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbTier71.Location = new System.Drawing.Point(40, 119);
             this.cbTier71.Name = "cbTier71";
             this.cbTier71.Size = new System.Drawing.Size(15, 14);
             this.cbTier71.TabIndex = 38;
             this.cbTier71.UseVisualStyleBackColor = true;
+            this.cbTier71.CheckedChanged += new System.EventHandler(this.tierCheckChange);
             // 
             // cbTier61
             // 
@@ -521,6 +550,7 @@
             this.cbTier61.Size = new System.Drawing.Size(15, 14);
             this.cbTier61.TabIndex = 35;
             this.cbTier61.UseVisualStyleBackColor = true;
+            this.cbTier61.CheckedChanged += new System.EventHandler(this.tierCheckChange);
             // 
             // cbTier51
             // 
@@ -530,6 +560,7 @@
             this.cbTier51.Size = new System.Drawing.Size(15, 14);
             this.cbTier51.TabIndex = 32;
             this.cbTier51.UseVisualStyleBackColor = true;
+            this.cbTier51.CheckedChanged += new System.EventHandler(this.tierCheckChange);
             // 
             // Form1
             // 

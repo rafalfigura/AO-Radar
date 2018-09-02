@@ -42,25 +42,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PcapDotNet.Base">
-      <HintPath>..\..\..\..\..\Desktop\PcapDotNet.Binaries.1.0.4.x86\PcapDotNet.Base.dll</HintPath>
-      <Private>True</Private>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>C:\Users\Rafal\Desktop\Nowy folder\PcapDotNet.Base.dll</HintPath>
     </Reference>
     <Reference Include="PcapDotNet.Core">
-      <HintPath>..\..\..\..\..\Desktop\PcapDotNet.Binaries.1.0.4.x86\PcapDotNet.Core.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>C:\Users\Rafal\Desktop\Nowy folder\PcapDotNet.Core.dll</HintPath>
     </Reference>
     <Reference Include="PcapDotNet.Core.Extensions">
-      <HintPath>..\..\..\..\..\Desktop\PcapDotNet.Binaries.1.0.4.x86\PcapDotNet.Core.Extensions.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>C:\Users\Rafal\Desktop\Nowy folder\PcapDotNet.Core.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="PcapDotNet.Packets">
-      <HintPath>..\..\..\..\..\Desktop\PcapDotNet.Binaries.1.0.4.x86\PcapDotNet.Packets.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>C:\Users\Rafal\Desktop\Nowy folder\PcapDotNet.Packets.dll</HintPath>
     </Reference>
     <Reference Include="Photon3DotNet">
-      <HintPath>..\..\..\..\..\Desktop\photon-dotnet-sdk_v4-1-1-17\libs\Release\Photon3DotNet.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>C:\Users\Rafal\Desktop\Nowy folder\Photon3DotNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -86,7 +80,6 @@
     <Compile Include="Harvestable\HarvestableType.cs" />
     <Compile Include="Mobs\Mob.cs" />
     <Compile Include="Mobs\MobsHandler.cs" />
-    <Compile Include="PhotonPacketHandler\IPhotonEventHandler.cs" />
     <Compile Include="MapForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,6 +89,7 @@
     <Compile Include="MouseClickMessageFilter.cs" />
     <Compile Include="AOEnums\OperationCodes.cs" />
     <Compile Include="PacketHandler.cs" />
+    <Compile Include="PhotonPacketHandler\PhotonPackageParser.cs" />
     <Compile Include="PhotonPacketHandler\PhotonPacketHandler.cs" />
     <Compile Include="Player\Player.cs" />
     <Compile Include="Player\PlayerHandler.cs" />

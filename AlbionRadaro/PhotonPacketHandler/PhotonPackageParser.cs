@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AlbionRadaro
 {
-    public interface IPhotonEventHandler
+    public interface IPhotonPackageHandler
     {
         void OnEvent(byte code, Dictionary<byte, object> parameters);
 
@@ -14,5 +14,4 @@ namespace AlbionRadaro
 
         void OnRequest(byte operationCode, Dictionary<byte, object> parameters);
     }
-    
 }
