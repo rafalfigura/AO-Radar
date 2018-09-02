@@ -89,9 +89,21 @@ namespace AlbionRadaro
                 Brushes.Gray, 
                 Brushes.Blue, 
                 Brushes.Red, 
-                Brushes.Orange, 
-                Brushes.Gold, 
+                Brushes.Coral, 
+                Brushes.Goldenrod, 
                 Brushes.Silver
+            };
+            Brush[] fontPerColor = {
+                Brushes.White,
+                Brushes.White, 
+                Brushes.White, 
+                Brushes.White, 
+                Brushes.White, 
+                Brushes.White, 
+                Brushes.Black, 
+                Brushes.Black, 
+                Brushes.Black
+                                        
             };
             Pen[] chargePen = {
                 new Pen (Color.Green, 1.5f),
@@ -150,7 +162,7 @@ namespace AlbionRadaro
                         g.FillEllipse(harvestBrushes[h.Tier], (float)(hX - 2.5f), (float)(hY - 2.5f), 5f, 5f);
                         g.TranslateTransform(hX, hY);
                         g.RotateTransform(135f);
-                        g.DrawString(h.getMapInfo(), font, Brushes.White/*harvestBrushes[h.Tier]*/, -2.5f, -2.5f);
+                        g.DrawString(h.getMapInfo(), font, fontPerColor[h.Tier]/*harvestBrushes[h.Tier]*/, -2.5f, -2.5f);
                         g.RotateTransform(-135f);
                         g.TranslateTransform(-hX, -hY);
 
