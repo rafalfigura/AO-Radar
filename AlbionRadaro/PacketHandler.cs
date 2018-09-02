@@ -71,6 +71,7 @@ namespace AlbionRadaro
                 case EventCodes.CastSpell:
                     onCastSpell(parameters);
                     break;
+                    break;
                 default: break;
             }
         }
@@ -278,7 +279,9 @@ namespace AlbionRadaro
             Single[] location = (Single[])parameters[1]; //if we switch to [3] we will have future position of player instead of 'right now'
             Single posX = Single.Parse(location[0].ToString());
             Single posY = Single.Parse(location[1].ToString());
-          //  Console.WriteLine("onLocalPlayerMovement: " +posX + " " + posY);
+            // Console.WriteLine("onLocalPlayerMovement: " +posX + " " + posY);
+            // 373,6958 -358,3227 top of map
+            //-375,2436 366,6795 bottom of map
 
             playerHandler.UpdateLocalPlayerPosition(posX, posY);
         }
@@ -288,6 +291,7 @@ namespace AlbionRadaro
             Byte[] a = (Byte[])parameters[1];
             Single posX = BitConverter.ToSingle(a, 9);
             Single posY = BitConverter.ToSingle(a, 13);
+            //Console.WriteLine("X:" + posX + " Y:" + posY);
 
             playerHandler.UpdatePlayerPosition(id, posX, posY);
         }
