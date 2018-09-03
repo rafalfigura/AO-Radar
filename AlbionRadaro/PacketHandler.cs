@@ -98,14 +98,14 @@ namespace AlbionRadaro
 
         private void onCastSpell(Dictionary<byte, object> parameters)
         {
-            foreach (KeyValuePair<byte, object> kvp in parameters)
-                Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+          //  foreach (KeyValuePair<byte, object> kvp in parameters)
+         //       Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
         }
 
         private void onInCombatStateUpdate(Dictionary<byte, object> parameters)
         {
-            foreach (KeyValuePair<byte, object> kvp in parameters)
-                Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+           // foreach (KeyValuePair<byte, object> kvp in parameters)
+           //     Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
         }
         private void onJoinFinished(Dictionary<byte, object> parameters)
         {
@@ -135,6 +135,10 @@ namespace AlbionRadaro
                 [8] moveTarget
                 [13] Health
              */
+            foreach (KeyValuePair<byte, object> kvp in parameters)
+                Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+
+
             int id = int.Parse(parameters[0].ToString());
             int typeId = int.Parse(parameters[1].ToString());
             Single[] loc = (Single[])parameters[8];
