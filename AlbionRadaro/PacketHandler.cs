@@ -110,6 +110,7 @@ namespace AlbionRadaro
         private void onJoinFinished(Dictionary<byte, object> parameters)
         {
             this.harvestableHandler.HarvestableList.Clear();
+            this.mobsHandler.MobList.Clear();
            // this.playerHandler.PlayersInRange.Clear();
         }
         private void onNewMob(Dictionary<byte, object> parameters)
