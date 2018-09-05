@@ -8,6 +8,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -31,14 +32,13 @@ namespace AlbionRadaro
         public Form1()
         {
             InitializeComponent();
+
             mapForm.Show();
             Settings.loadSettings(this);
             updateSettings();
-            //harvestableHandler.HarvestableList.Add(new Harvestable(0, 0, 0, 100, 100, 0));
-            // harvestableHandler.HarvestableList.Add(new Harvestable(0, 0, 0, 200, 200, 0));
-            // harvestableHandler.HarvestableList.Add(new Harvestable(0, 0, 0, 100, 200, 0));
-            // harvestableHandler.HarvestableList.Add(new Harvestable(0, 0, 0, 200, 100, 0));
+
         }
+          
         public static Bitmap RotateImage(Bitmap b, float angle)
         {
             //create a new empty bitmap to hold rotated image
@@ -78,9 +78,28 @@ namespace AlbionRadaro
                 while (true) ;
             }
         }
-
+        public static Double Distance(Single x1, Single x2, Single y1, Single y2)
+        {
+            return Math.Sqrt(Math.Pow(x1 - x2, 2) + Math.Pow(y1 - y2, 2));
+        }
         private void drawerThread()
         {
+            Color[] mapColors =  {
+                    Color.White, 
+                    Color.Black,
+                    Color.Red,
+                    Color.Coral,
+                    Color.Black,
+                    Color.Gray, 
+                    Color.Blue, 
+                    Color.Red, 
+                    Color.Coral, 
+                    Color.Goldenrod,
+                    Color.Silver, 
+                    Color.Blue, 
+                    Color.Green,
+                    Color.Purple
+                };
             Pen linePen = new Pen(Color.Red,3);
             Brush[] harvestBrushes = {
                 Brushes.Black,
@@ -115,10 +134,10 @@ namespace AlbionRadaro
             Brush mobBrush = Brushes.Black;
 
             int HEIGHT, WIDTH, MULTIPLER = 4;
+            Bitmap bitmap = new Bitmap(500, 500);
+            bitmap.SetResolution(100, 100);
             HEIGHT = mapForm.pictureBox2.Height;
             WIDTH = mapForm.pictureBox2.Height;
-            Bitmap bitmap = new Bitmap(WIDTH, HEIGHT);
-            bitmap.SetResolution(100, 100);
             Single lpX;
             Single lpY;
             Font font = new Font("Arial", 3, FontStyle.Bold);
@@ -127,7 +146,7 @@ namespace AlbionRadaro
             mapForm.pictureBox2.Image = bitmap;
             while (true)
             {
-
+                    
                 using (Graphics g = Graphics.FromImage(bitmap))
                 {
                     
@@ -136,7 +155,6 @@ namespace AlbionRadaro
                     lpY = playerHandler.localPlayerPosY();
 
                     g.TranslateTransform(WIDTH / 2, HEIGHT / 2);
-
                     g.FillEllipse(Brushes.Black, -2, -2, 4, 4);
                     g.DrawEllipse(linePen, -80, -80, 160, 160);
                     g.DrawEllipse(linePen, -170, -170, 340, 340);
@@ -162,7 +180,7 @@ namespace AlbionRadaro
                         g.FillEllipse(harvestBrushes[h.Tier], (float)(hX - 2.5f), (float)(hY - 2.5f), 5f, 5f);
                         g.TranslateTransform(hX, hY);
                         g.RotateTransform(135f);
-                        g.DrawString(h.getMapInfo(), font, fontPerColor[h.Tier]/*harvestBrushes[h.Tier]*/, -2.5f, -2.5f);
+                        g.DrawString(h.getMapInfo(), font, fontPerColor[h.Tier], -2.5f, -2.5f);
                         g.RotateTransform(-135f);
                         g.TranslateTransform(-hX, -hY);
 
@@ -184,8 +202,7 @@ namespace AlbionRadaro
                             g.FillEllipse(playerBrush, hX, hY, 4, 4);
                         }
                     }
-                    if (Settings.LivingEntities)
-                    { 
+                    
                         List<Mob> mList = new List<Mob>();
                         lock (mobsHandler.MobList){
                             try{
@@ -196,125 +213,58 @@ namespace AlbionRadaro
                         foreach (Mob m in mList) {
                             Single hX = -1 * m.PosX + lpX;
                             Single hY = m.PosY - lpY;
-                            g.FillEllipse(mobBrush, hX, hY, 3, 3);
+
+                            byte mobTier = 5;
+                            MobType mobType = MobType.OTHER;
+
+                            if(m.MobInfo != null){
+                                mobTier = m.MobInfo.Tier;
+                                mobType = m.MobInfo.MobType;
+
+                                if (!Settings.IsInMobs(mobType)) continue;
+                                if (!Settings.IsInTiers(mobTier, m.Charges)) continue;
+
+                                    switch(m.MobInfo.HarvestableMobType){
+                                        case HarvestableMobType.ESSENCE:
+                                            //idk?
+                                        case HarvestableMobType.SWAMP: 
+                                            if (!Settings.IsInHarvestable(HarvestableType.FIBER)) continue;
+                                            break;
+                                        case HarvestableMobType.STEPPE:
+                                            if (!Settings.IsInHarvestable(HarvestableType.HIDE)) continue;
+                                            break;
+                                        case HarvestableMobType.MOUNTAIN:
+                                            if (!Settings.IsInHarvestable(HarvestableType.ORE)) continue;
+                                            break;
+                                        case HarvestableMobType.FOREST:
+                                            if (!Settings.IsInHarvestable(HarvestableType.WOOD)) continue;
+                                            break;
+                                        case HarvestableMobType.HIGHLAND:
+                                            if (!Settings.IsInHarvestable(HarvestableType.ROCK)) continue;
+                                            break;
+                                    }
+                            }
+                            else
+                            {
+                                if(Settings.IsInMobs(MobType.OTHER))
+                                    g.FillEllipse(Brushes.Black,hX-1, hY-1, 2f, 2f);
+                                continue;
+                            }
+                            g.FillEllipse(harvestBrushes[mobTier], (float)(hX - 2.5f), (float)(hY - 2.5f), 5f, 5f);
+                            g.TranslateTransform(hX, hY);
+                            g.RotateTransform(135f);
+                            g.DrawString(m.getMapStringInfo(), font, fontPerColor[mobTier], -2.5f, -2.5f);
+                            g.RotateTransform(-135f);
+                            g.TranslateTransform(-hX, -hY);
+
+                            if (m.Charges > 0) g.DrawEllipse(chargePen[m.Charges - 1], hX-3 , hY-3, 6, 6);
                         }
                     }
+                 
                     mapForm.pictureBox2.Image = RotateImage(bitmap, 225f);
-
-                    if (mapForm.pictureBox2.InvokeRequired)
-                    {
-                        mapForm.pictureBox2.Invoke((Action)(() => { 
-                            //invoked code
-                        }));
-                    }
-
-                }
+                    bitmap.Save("a" + new Random().Next(0,1000000000)+".png");
                 Thread.Sleep(10);
-               /* if(false)
-                using (Graphics g = Graphics.FromImage(bitmap))
-                {
 
-                    g.Clear(Color.Transparent);
-                    lpX = playerHandler.localPlayerPosX() * MULTIPLER;
-                    lpY = playerHandler.localPlayerPosY() * MULTIPLER;
-                    g.InterpolationMode = InterpolationMode.NearestNeighbor;
-                    g.TranslateTransform(WIDTH / 2, HEIGHT / 2);
-
-                    g.FillEllipse(Brushes.Black, -2, -2, 4, 4);
-                    g.DrawEllipse(linePen, -80, -80, 160, 160);
-                    g.DrawEllipse(linePen, -170, -170, 340, 340);
-                    g.DrawEllipse(linePen, -WIDTH / 2, -HEIGHT / 2, WIDTH - 1, HEIGHT - 1);
-
-                    List<Harvestable> hLis = new List<Harvestable>();
-                    lock (harvestableHandler)
-                    {
-                        try
-                        {
-                            hLis = this.harvestableHandler.HarvestableList.ToList();
-                        }
-                        catch (Exception e1)
-                        {
-                            //TODO - there is thread conflict. From time to time there is exception // maybe thread safe list?
-                        }
-                    }
-
-                    foreach (Harvestable h in hLis)
-                    {
-                        if (!Settings.IsInTiers(h.Tier)) continue;
-                        if (!Settings.IsInHarvestable((HarvestableType)h.Type)) continue;
-                        if (Settings.OnlyRares() && h.Charges == 0) continue;
-                        if (h.Size == 0) continue;
-
-                        SizeF sizeOfMapInfo = g.MeasureString(h.getMapInfo(), font);
-
-                        Bitmap b = new Bitmap((int)sizeOfMapInfo.Width * 2, (int)sizeOfMapInfo.Width * 2);
-                        b.MakeTransparent();
-                        Graphics gg = Graphics.FromImage(b);
-                        gg.InterpolationMode = InterpolationMode.NearestNeighbor;
-                        gg.Clear(Color.Transparent);
-                        gg.TranslateTransform(sizeOfMapInfo.Width / 2, sizeOfMapInfo.Width / 2);
-                        gg.RotateTransform(-45f);
-                        gg.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-                        gg.DrawString(h.getMapInfo(), font, harvestBrushes[h.Tier], 0, 0);
-                        gg.TranslateTransform(-sizeOfMapInfo.Width / 2, -sizeOfMapInfo.Width / 2);
-                        b.RotateFlip(RotateFlipType.Rotate180FlipX);
-
-                        float imagePosX = h.PosX * MULTIPLER - lpX - (sizeOfMapInfo.Width / 2) - (sizeOfMapInfo.Width / 2);
-                        float imagePosY = h.PosY * MULTIPLER - lpY - (sizeOfMapInfo.Width / 2) - (sizeOfMapInfo.Height / 2);
-
-                        g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-                        g.FillEllipse(Brushes.Black, h.PosX * MULTIPLER - 10 - lpX + 2, h.PosY * MULTIPLER - 10 - lpY + 7, 20, 20);
-
-
-                        g.DrawImage(b, imagePosX, imagePosY);
-
-                        if (h.Charges == 1) g.DrawEllipse(chargePen[0], h.PosX * MULTIPLER - 10 - lpX + 2, h.PosY * MULTIPLER - 10 - lpY + 7, 20, 20);
-                        else if (h.Charges == 2) g.DrawEllipse(chargePen[1], h.PosX * MULTIPLER - 12 - lpX + 2, h.PosY * MULTIPLER - 12 - lpY + 7, 24, 24);
-                        else if (h.Charges == 3) g.DrawEllipse(chargePen[2], h.PosX * MULTIPLER - 14 - lpX + 2, h.PosY * MULTIPLER - 14 - lpY + 7, 28, 28);
-
-                    }
-
-
-                   List<Mob> mList = new List<Mob>();
-                      lock (mobsHandler.MobList)
-                      {
-                          try
-                          {
-                              mList = this.mobsHandler.MobList.ToList();
-                          }
-                          catch (Exception e1)
-                          {
-                              //TODO - there is thread conflict. From time to time there is exception // maybe thread safe list?
-                          }
-                      }
-                      foreach (Mob m in mList)
-                          g.FillEllipse(mobBrush, m.PosX * MULTIPLER - 3 - lpX, m.PosY * MULTIPLER - 3 - lpY, 6, 6);
-                            
-                              
-                    if (Settings.DisplayPeople)
-                    {
-                        List<Player> pLis = new List<Player>();
-                        lock (this.playerHandler.PlayersInRange)
-                        {
-                            try
-                            {
-                                pLis = this.playerHandler.PlayersInRange.ToList();
-                            }
-                            catch (Exception e2)
-                            {
-                                //TODO - there is thread conflict. From time to time there is exception 
-                            }
-                        }
-
-                        foreach (Player p in pLis)
-                            g.FillEllipse(playerBrush, p.PosX * MULTIPLER - 3 - lpX, p.PosY * MULTIPLER - 3 - lpY, 6, 6);
-                    }
-                    g.TranslateTransform(-WIDTH / 2, -HEIGHT / 2);
-                    bitmap.RotateFlip(RotateFlipType.Rotate90FlipX);
-                    mapForm.pictureBox1.Image = RotateImage(bitmap, -45f);
-                }
-                */
-                ///Thread.Sleep(1000);
             }
         }
         public string Between(string STR, string FirstString, string LastString)
@@ -443,6 +393,7 @@ namespace AlbionRadaro
                 HarvestableType.ROCK_CRITTER_RED,
                 HarvestableType.ROCK_GUARDIAN_RED
             }, this.cbRock.Checked);
+
             Settings.UpdateHarvestable(new List<HarvestableType>{
                 HarvestableType.HIDE,
                 HarvestableType.HIDE_CRITTER,
@@ -452,10 +403,14 @@ namespace AlbionRadaro
                 HarvestableType.HIDE_MOUNTAIN,
                 HarvestableType.HIDE_STEPPE,
                 HarvestableType.HIDE_SWAMP
-            }, this.cbTreasures.Checked);
-            Settings.setSoundsOnPlayer(cbSounds.Checked);
-            Settings.showEntities(this.cbEntities.Checked);
+            }, this.cbSkinnable.Checked);
 
+            Settings.UpdateHarvestableMob(MobType.HARVESTABLE, cbHarvestable.Checked);
+            Settings.UpdateHarvestableMob(MobType.SKINNABLE, cbSkinnable.Checked);
+            Settings.UpdateHarvestableMob(MobType.OTHER, cbOtherMobs.Checked);
+            Settings.UpdateHarvestableMob(MobType.RESOURCE, cbTreasures.Checked);
+
+            Settings.setSoundsOnPlayer(cbSounds.Checked);
 
             Settings.saveSettings(this);
         }
@@ -534,8 +489,11 @@ namespace AlbionRadaro
             }
             else
             {
+               // this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+                mapForm.pictureBox2.Hide();
                 mapForm.BackColor = Color.White;
                 mapForm.TransparencyKey = Color.White;
+                mapForm.pictureBox2.Show();
             }
 
         }

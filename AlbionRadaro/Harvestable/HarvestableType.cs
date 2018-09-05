@@ -61,4 +61,14 @@ namespace AlbionRadaro
         CHEST_EXP_SILVERCOINS_LOOT_VETERAN,
         SILVERCOINS_LOOT_SARCOPHAGUS_STANDARD_MINIBOSS,
     }
+    public enum HarvestableMobType
+    {
+        ESSENCE,
+        SWAMP,
+        STEPPE,
+        MOUNTAIN,
+        FOREST,
+        HIGHLAND
+
+    }
 }

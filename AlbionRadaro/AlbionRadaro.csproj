@@ -41,6 +41,9 @@
     <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Albion.Common">
+      <HintPath>C:\Users\Rafal\Desktop\Albion.Common.dll</HintPath>
+    </Reference>
     <Reference Include="PcapDotNet.Base">
       <HintPath>C:\Users\Rafal\Desktop\Nowy folder\PcapDotNet.Base.dll</HintPath>
     </Reference>
@@ -79,6 +82,7 @@
     <Compile Include="Harvestable\HarvestableHandler.cs" />
     <Compile Include="Harvestable\HarvestableType.cs" />
     <Compile Include="Mobs\Mob.cs" />
+    <Compile Include="Mobs\MobInfo.cs" />
     <Compile Include="Mobs\MobsHandler.cs" />
     <Compile Include="MapForm.cs">
       <SubType>Form</SubType>
@@ -86,6 +90,7 @@
     <Compile Include="MapForm.Designer.cs">
       <DependentUpon>MapForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Mobs\MobTypes.cs" />
     <Compile Include="MouseClickMessageFilter.cs" />
     <Compile Include="AOEnums\OperationCodes.cs" />
     <Compile Include="PacketHandler.cs" />

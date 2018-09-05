@@ -17,7 +17,7 @@ namespace AlbionRadaro.Mobs
 
         public void AddMob(int id, int typeId, Single posX, Single posY, int health)
         {
-            Mob h = new Mob(id, typeId, posX, posY, health);
+            Mob h = new Mob(id, typeId, posX, posY, health, 0);
             if (!mobsList.Contains(h)) {
                 mobsList.Add(h);
                 Console.WriteLine("Add mob: " + h.ToString());
@@ -34,15 +34,13 @@ namespace AlbionRadaro.Mobs
         }
 
 
-        internal void UpdateMob(int mobId, byte health)
+        internal void UpdateMobCharges(int mobId, byte charges)
         {
             mobsList.ForEach(h =>
             {
                 if (h.Id == mobId)
-                {
-                    //TODO - update 
-                    h.Health = health;
-                }
+                    h.Charges = charges;
+                
             });
 
         }
