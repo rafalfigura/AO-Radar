@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace AlbionRadaro
 {
-    public partial class MapForm : Form
+    public partial class MapForm : PerPixelAlphaForm
     {
         public MapForm()
         {
@@ -21,7 +21,25 @@ namespace AlbionRadaro
         {
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.DoubleBuffered = true;
+            
+           // this.SetStyle( ControlStyles.AllPaintingInWmPaint, true);
+           // this.SetStyle( ControlStyles.UserPaint, true);
+           // this.SetStyle( ControlStyles.DoubleBuffer, true);
+           // this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+
+
+           // this.BackColor = Color.Magenta;
+           // this.TransparencyKey = Color.Magenta;
         }
+
+        private void MapForm_Paint(object sender, PaintEventArgs e)
+        {
+         //   e.Graphics.FillRectangle(Brushes.Transparent, e.ClipRectangle);
+            
+        }
+
+
        
     }
 }

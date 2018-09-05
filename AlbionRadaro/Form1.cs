@@ -136,14 +136,14 @@ namespace AlbionRadaro
             int HEIGHT, WIDTH, MULTIPLER = 4;
             Bitmap bitmap = new Bitmap(500, 500);
             bitmap.SetResolution(100, 100);
-            HEIGHT = mapForm.pictureBox2.Height;
-            WIDTH = mapForm.pictureBox2.Height;
+            HEIGHT = 500;
+            WIDTH = 500;
             Single lpX;
             Single lpY;
             Font font = new Font("Arial", 3, FontStyle.Bold);
 
             float scale = 4.0f;
-            mapForm.pictureBox2.Image = bitmap;
+           // mapForm.SetBitmap(bitmap);
             while (true)
             {
                     
@@ -158,7 +158,7 @@ namespace AlbionRadaro
                     g.FillEllipse(Brushes.Black, -2, -2, 4, 4);
                     g.DrawEllipse(linePen, -80, -80, 160, 160);
                     g.DrawEllipse(linePen, -170, -170, 340, 340);
-                    g.DrawEllipse(linePen, -WIDTH / 2, -HEIGHT / 2, WIDTH - 1, HEIGHT - 1);
+                    g.DrawEllipse(linePen, -WIDTH / 2 + 6, -HEIGHT / 2 + 6, WIDTH - 6, HEIGHT - 6);
 
                     g.ScaleTransform(scale, scale);
                     
@@ -260,8 +260,13 @@ namespace AlbionRadaro
                             if (m.Charges > 0) g.DrawEllipse(chargePen[m.Charges - 1], hX-3 , hY-3, 6, 6);
                         }
                     }
-                 
-                    mapForm.pictureBox2.Image = RotateImage(bitmap, 225f);
+
+                if (mapForm.InvokeRequired)
+                {
+                    mapForm.Invoke((Action)(() => {
+                        mapForm.SetBitmap(RotateImage(bitmap, 225f));
+                    }));
+                }
                     bitmap.Save("a" + new Random().Next(0,1000000000)+".png");
                 Thread.Sleep(10);
 
@@ -443,61 +448,12 @@ namespace AlbionRadaro
         private const UInt32 SWP_NOMOVE = 0x0002;
         private const UInt32 TOPMOST_FLAGS = SWP_NOMOVE | SWP_NOSIZE;
 
-        bool mapFormIsVisible = true;
-        private void button1_Click(object sender, EventArgs e)
+
+        protected override void OnPaintBackground(PaintEventArgs e)
+        // Paint background with underlying graphics from other controls
         {
-            if (!mapFormIsVisible)
-            {
-                mapForm.Opacity = 1;
-                mapForm.FormBorderStyle = FormBorderStyle.FixedSingle;
-                var location = mapForm.PointToScreen(new Point(0, 0));
-                mapForm.Top = location.Y - 30;
-
-                mapForm.BackColor = System.Drawing.SystemColors.Control;
-                mapForm.TransparencyKey = Color.Transparent;
-                mapFormIsVisible = true;
-                button1.Text = "Hide map window";
-            }
-            else
-            {
-                button1.Text = "Show map window";
-                mapFormIsVisible = false;
-
-                mapForm.FormBorderStyle = FormBorderStyle.None;
-                if ((this.Filter != null))
-                {
-                    Application.RemoveMessageFilter(this.Filter);
-                    this.Filter = null;
-                }
-                UInt32 initialStyle = GetWindowLong(mapForm.Handle, -20);
-                SetWindowLong(mapForm.Handle, -20, (uint)initialStyle | 0x80000 | 0x20);
-                SetWindowPos(mapForm.Handle, HWND_TOPMOST, 0, 0, 0, 0, TOPMOST_FLAGS);
-            }
-
-
+           
         }
-
-
-
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (mapForm.BackColor != System.Drawing.SystemColors.Control)
-            {
-                mapForm.BackColor = System.Drawing.SystemColors.Control;
-                mapForm.TransparencyKey = Color.Transparent;
-            }
-            else
-            {
-               // this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-                mapForm.pictureBox2.Hide();
-                mapForm.BackColor = Color.White;
-                mapForm.TransparencyKey = Color.White;
-                mapForm.pictureBox2.Show();
-            }
-
-        }
-
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Environment.Exit(Environment.ExitCode);
@@ -507,6 +463,18 @@ namespace AlbionRadaro
         private void cbSounds_CheckedChanged(object sender, EventArgs e)
         {
             updateSettings();
+        }
+
+        private void groupBox4_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MoveRadarValueChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine(nRadarX.Value + " " + nRadarY.Value);
+            mapForm.Left = int.Parse(nRadarX.Value.ToString());
+            mapForm.Top = int.Parse(nRadarY.Value.ToString());
         }
 
     }

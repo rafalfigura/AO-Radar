@@ -39,8 +39,6 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.cbSounds = new System.Windows.Forms.CheckBox();
             this.cbDisplayPeople = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.cbTier1230 = new System.Windows.Forms.CheckBox();
@@ -70,10 +68,16 @@
             this.cbTier51 = new System.Windows.Forms.CheckBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.cbOtherMobs = new System.Windows.Forms.CheckBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.nRadarY = new System.Windows.Forms.NumericUpDown();
+            this.nRadarX = new System.Windows.Forms.NumericUpDown();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nRadarY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nRadarX)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox2
@@ -211,26 +215,6 @@
             this.cbDisplayPeople.Text = "Display People";
             this.cbDisplayPeople.UseVisualStyleBackColor = true;
             this.cbDisplayPeople.CheckedChanged += new System.EventHandler(this.cbDisplayPeople_CheckedChanged);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(129, 210);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(154, 23);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "Make map better";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(129, 181);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(154, 23);
-            this.button2.TabIndex = 16;
-            this.button2.Text = "Hide map background";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label1
             // 
@@ -559,6 +543,7 @@
             this.groupBox4.TabIndex = 21;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Monsters";
+            this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
             // 
             // cbOtherMobs
             // 
@@ -571,16 +556,82 @@
             this.cbOtherMobs.UseVisualStyleBackColor = true;
             this.cbOtherMobs.CheckedChanged += new System.EventHandler(this.harvestableCheckChange);
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.nRadarY);
+            this.groupBox5.Controls.Add(this.nRadarX);
+            this.groupBox5.Location = new System.Drawing.Point(129, 180);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(154, 57);
+            this.groupBox5.TabIndex = 22;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Radar Offset";
+            // 
+            // nRadarY
+            // 
+            this.nRadarY.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.nRadarY.Location = new System.Drawing.Point(85, 20);
+            this.nRadarY.Maximum = new decimal(new int[] {
+            1410065408,
+            2,
+            0,
+            0});
+            this.nRadarY.Minimum = new decimal(new int[] {
+            1410065408,
+            2,
+            0,
+            -2147483648});
+            this.nRadarY.Name = "nRadarY";
+            this.nRadarY.Size = new System.Drawing.Size(60, 20);
+            this.nRadarY.TabIndex = 1;
+            this.nRadarY.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.nRadarY.ValueChanged += new System.EventHandler(this.MoveRadarValueChanged);
+            // 
+            // nRadarX
+            // 
+            this.nRadarX.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.nRadarX.Location = new System.Drawing.Point(19, 20);
+            this.nRadarX.Maximum = new decimal(new int[] {
+            1410065408,
+            2,
+            0,
+            0});
+            this.nRadarX.Minimum = new decimal(new int[] {
+            1410065408,
+            2,
+            0,
+            -2147483648});
+            this.nRadarX.Name = "nRadarX";
+            this.nRadarX.Size = new System.Drawing.Size(60, 20);
+            this.nRadarX.TabIndex = 0;
+            this.nRadarX.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.nRadarX.ValueChanged += new System.EventHandler(this.MoveRadarValueChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(290, 260);
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -601,6 +652,9 @@
             this.groupBox1.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.nRadarY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nRadarX)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -619,8 +673,6 @@
         public System.Windows.Forms.GroupBox groupBox3;
         public System.Windows.Forms.CheckBox cbSounds;
         public System.Windows.Forms.CheckBox cbDisplayPeople;
-        public System.Windows.Forms.Button button1;
-        public System.Windows.Forms.Button button2;
         public System.Windows.Forms.Label label1;
         public System.Windows.Forms.Label label2;
         public System.Windows.Forms.CheckBox cbTier1230;
@@ -650,6 +702,9 @@
         public System.Windows.Forms.CheckBox cbTier41;
         private System.Windows.Forms.GroupBox groupBox4;
         public System.Windows.Forms.CheckBox cbOtherMobs;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.NumericUpDown nRadarY;
+        private System.Windows.Forms.NumericUpDown nRadarX;
     }
 }
 

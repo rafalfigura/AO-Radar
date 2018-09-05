@@ -38,10 +38,11 @@ namespace AlbionRadaro
             EventCodes eventCode = (EventCodes)iCode;
 
 
-            Console.WriteLine("Event: " + eventCode);
+            //Console.WriteLine("Event: " + eventCode);
             switch (eventCode)
             {
                 case EventCodes.HarvestableChangeState:
+                    Console.WriteLine("Event: " + eventCode);
                     onHarvestableChangeState(parameters);
                     break;
                 case EventCodes.HarvestFinished:
