@@ -74,16 +74,16 @@
     <Setting Name="rOre" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="rAnimal" Type="System.Boolean" Scope="User">
+    <Setting Name="rOtherMobs" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="rRock" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="rElemental" Type="System.Boolean" Scope="User">
+    <Setting Name="rHarvestableMob" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="rMob" Type="System.Boolean" Scope="User">
+    <Setting Name="rSkinnableMob" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="rTreasures" Type="System.Boolean" Scope="User">

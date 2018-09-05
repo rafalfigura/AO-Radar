@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AlbionRadaro.Mobs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,16 +11,11 @@ namespace AlbionRadaro
     {
         static List<String> tiers = new List<String>();
         static List<HarvestableType> harvestable = new List<HarvestableType>();
+        static List<MobType> mobs = new List<MobType>();
         static bool onlyRares = false;
         static bool displayPeople = true;
         static bool soundsOnPlayer = false;
-        static bool livingEntities = false;
 
-        public static bool LivingEntities
-        {
-            get { return Settings.livingEntities; }
-            set { Settings.livingEntities = value; }
-        }
         public static void saveSettings(Form1 form){
             AppSettings s = new AppSettings();
 
@@ -47,13 +43,16 @@ namespace AlbionRadaro
             s.rFiber        = form.cbFiber.Checked;
             s.rWood         = form.cbWood.Checked;
             s.rOre          = form.cbOre.Checked;
-            s.rAnimal       = form.cbAnimal.Checked;
             s.rRock         = form.cbRock.Checked;
-            s.rElemental    = form.cbEntities.Checked;
-            s.rMob          = form.cbMob.Checked;
+
+            s.rOtherMobs    = form.cbOtherMobs.Checked;
+            s.rHarvestableMob          = form.cbHarvestable.Checked;
+            s.rSkinnableMob       = form.cbSkinnable.Checked;
+
             s.rTreasures    = form.cbTreasures.Checked;
             s.rSoundOnPlayer = form.cbSounds.Checked;
             s.Save();
+
         }
         public static void loadSettings(Form1 form)
         {
@@ -83,10 +82,10 @@ namespace AlbionRadaro
             form.cbFiber.Checked     = s.rFiber;    
             form.cbWood.Checked      = s.rWood;     
             form.cbOre.Checked       = s.rOre ;     
-            form.cbAnimal.Checked    = s.rAnimal; 
+            form.cbSkinnable.Checked    = s.rOtherMobs; 
             form.cbRock.Checked      = s.rRock;    
-            form.cbEntities.Checked  = s.rElemental;
-            form.cbMob.Checked       = s.rMob;
+            form.cbOtherMobs.Checked  = s.rHarvestableMob;
+            form.cbHarvestable.Checked       = s.rSkinnableMob;
             form.cbTreasures.Checked = s.rTreasures;
             form.cbSounds.Checked    = s.rSoundOnPlayer;
 
@@ -109,6 +108,10 @@ namespace AlbionRadaro
         {
             return tiers.Contains(tier+"."+enchant);
         }
+        public static bool IsInMobs(MobType mobType)
+        {
+            return mobs.Contains(mobType);
+        }
         public static bool OnlyRares()
         {
             return onlyRares;
@@ -117,7 +120,7 @@ namespace AlbionRadaro
         {
             return harvestable.Contains(ht);
         }
-
+        
         public static void UpdateTier(int tier, byte enchant, bool show)
         {
             byte bTier = (byte) tier;
@@ -146,6 +149,19 @@ namespace AlbionRadaro
             }
         }
 
+        public static void UpdateHarvestableMob(MobType h, bool show)
+        {
+            if (show)
+            {
+                if (!mobs.Contains(h))
+                    mobs.Add(h);
+            }
+            else
+            {
+                if (mobs.Contains(h))
+                    mobs.Remove(h);
+            }
+        }
 
         internal static void UpdateOnlyRares(bool raresOnly)
         {
@@ -157,9 +173,5 @@ namespace AlbionRadaro
             soundsOnPlayer = p;
         }
 
-        internal static void showEntities(bool p)
-        {
-            livingEntities = p;
-        }
     }
 }

@@ -24,7 +24,8 @@ namespace AlbionRadaro
             }
             catch (Exception ex)
             {
-                ErrorLogging(ex);
+                //ErrorLogging(ex);
+                throw ex;
             }
         }
         public static void ErrorLogging(Exception ex)

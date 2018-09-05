@@ -71,8 +71,23 @@ namespace AlbionRadaro
                 case EventCodes.CastSpell:
                     onCastSpell(parameters);
                     break;
+                case EventCodes.MobChangeState:
+                    onMobChangeState(parameters);
+                    break;
                 default: break;
             }
+        }
+
+        private void onMobChangeState(Dictionary<byte, object> parameters)
+        {
+            int mobId = 0;
+            byte charges = 0;
+
+            if (!int.TryParse(parameters[0].ToString(), out mobId)) return;
+            if (!byte.TryParse(parameters[1].ToString(), out charges)) return;
+
+            mobsHandler.UpdateMobCharges(mobId, charges);
+
         }
 
 
@@ -135,8 +150,10 @@ namespace AlbionRadaro
                 [8] moveTarget
                 [13] Health
              */
+      
+            Console.WriteLine("parameters[6].GetType():" + parameters[6].GetType() + " " + parameters[6].ToString().Length);
             foreach (KeyValuePair<byte, object> kvp in parameters)
-                Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+                    Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
 
 
             int id = int.Parse(parameters[0].ToString());

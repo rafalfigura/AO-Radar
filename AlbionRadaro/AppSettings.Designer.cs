@@ -321,12 +321,12 @@ namespace AlbionRadaro {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool rAnimal {
+        public bool rOtherMobs {
             get {
-                return ((bool)(this["rAnimal"]));
+                return ((bool)(this["rOtherMobs"]));
             }
             set {
-                this["rAnimal"] = value;
+                this["rOtherMobs"] = value;
             }
         }
         
@@ -345,24 +345,24 @@ namespace AlbionRadaro {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool rElemental {
+        public bool rHarvestableMob {
             get {
-                return ((bool)(this["rElemental"]));
+                return ((bool)(this["rHarvestableMob"]));
             }
             set {
-                this["rElemental"] = value;
+                this["rHarvestableMob"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool rMob {
+        public bool rSkinnableMob {
             get {
-                return ((bool)(this["rMob"]));
+                return ((bool)(this["rSkinnableMob"]));
             }
             set {
-                this["rMob"] = value;
+                this["rSkinnableMob"] = value;
             }
         }
         

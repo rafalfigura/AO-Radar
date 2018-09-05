@@ -29,14 +29,13 @@
         private void InitializeComponent()
         {
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.cbTreasures = new System.Windows.Forms.CheckBox();
-            this.cbMob = new System.Windows.Forms.CheckBox();
-            this.cbEntities = new System.Windows.Forms.CheckBox();
             this.cbRock = new System.Windows.Forms.CheckBox();
-            this.cbAnimal = new System.Windows.Forms.CheckBox();
             this.cbOre = new System.Windows.Forms.CheckBox();
             this.cbWood = new System.Windows.Forms.CheckBox();
+            this.cbTreasures = new System.Windows.Forms.CheckBox();
             this.cbFiber = new System.Windows.Forms.CheckBox();
+            this.cbHarvestable = new System.Windows.Forms.CheckBox();
+            this.cbSkinnable = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.cbSounds = new System.Windows.Forms.CheckBox();
             this.cbDisplayPeople = new System.Windows.Forms.CheckBox();
@@ -69,63 +68,27 @@
             this.cbTier71 = new System.Windows.Forms.CheckBox();
             this.cbTier61 = new System.Windows.Forms.CheckBox();
             this.cbTier51 = new System.Windows.Forms.CheckBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.cbOtherMobs = new System.Windows.Forms.CheckBox();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.cbTreasures);
-            this.groupBox2.Controls.Add(this.cbMob);
-            this.groupBox2.Controls.Add(this.cbEntities);
             this.groupBox2.Controls.Add(this.cbRock);
-            this.groupBox2.Controls.Add(this.cbAnimal);
             this.groupBox2.Controls.Add(this.cbOre);
             this.groupBox2.Controls.Add(this.cbWood);
+            this.groupBox2.Controls.Add(this.cbTreasures);
             this.groupBox2.Controls.Add(this.cbFiber);
             this.groupBox2.Location = new System.Drawing.Point(129, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(154, 116);
+            this.groupBox2.Size = new System.Drawing.Size(154, 93);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Ressources";
-            // 
-            // cbTreasures
-            // 
-            this.cbTreasures.AutoSize = true;
-            this.cbTreasures.Checked = true;
-            this.cbTreasures.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbTreasures.Location = new System.Drawing.Point(72, 88);
-            this.cbTreasures.Name = "cbTreasures";
-            this.cbTreasures.Size = new System.Drawing.Size(73, 17);
-            this.cbTreasures.TabIndex = 7;
-            this.cbTreasures.Text = "Treasures";
-            this.cbTreasures.UseVisualStyleBackColor = true;
-            this.cbTreasures.CheckedChanged += new System.EventHandler(this.harvestableCheckChange);
-            // 
-            // cbMob
-            // 
-            this.cbMob.AutoSize = true;
-            this.cbMob.Enabled = false;
-            this.cbMob.Location = new System.Drawing.Point(73, 65);
-            this.cbMob.Name = "cbMob";
-            this.cbMob.Size = new System.Drawing.Size(47, 17);
-            this.cbMob.TabIndex = 6;
-            this.cbMob.Text = "Mob";
-            this.cbMob.UseVisualStyleBackColor = true;
-            this.cbMob.CheckedChanged += new System.EventHandler(this.harvestableCheckChange);
-            // 
-            // cbEntities
-            // 
-            this.cbEntities.AutoSize = true;
-            this.cbEntities.Location = new System.Drawing.Point(73, 42);
-            this.cbEntities.Name = "cbEntities";
-            this.cbEntities.Size = new System.Drawing.Size(60, 17);
-            this.cbEntities.TabIndex = 5;
-            this.cbEntities.Text = "Entities";
-            this.cbEntities.UseVisualStyleBackColor = true;
-            this.cbEntities.CheckedChanged += new System.EventHandler(this.harvestableCheckChange);
+            this.groupBox2.Text = "Resources";
             // 
             // cbRock
             // 
@@ -140,24 +103,12 @@
             this.cbRock.UseVisualStyleBackColor = true;
             this.cbRock.CheckedChanged += new System.EventHandler(this.harvestableCheckChange);
             // 
-            // cbAnimal
-            // 
-            this.cbAnimal.AutoSize = true;
-            this.cbAnimal.Enabled = false;
-            this.cbAnimal.Location = new System.Drawing.Point(6, 88);
-            this.cbAnimal.Name = "cbAnimal";
-            this.cbAnimal.Size = new System.Drawing.Size(57, 17);
-            this.cbAnimal.TabIndex = 3;
-            this.cbAnimal.Text = "Animal";
-            this.cbAnimal.UseVisualStyleBackColor = true;
-            this.cbAnimal.CheckedChanged += new System.EventHandler(this.harvestableCheckChange);
-            // 
             // cbOre
             // 
             this.cbOre.AutoSize = true;
             this.cbOre.Checked = true;
             this.cbOre.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbOre.Location = new System.Drawing.Point(6, 65);
+            this.cbOre.Location = new System.Drawing.Point(73, 42);
             this.cbOre.Name = "cbOre";
             this.cbOre.Size = new System.Drawing.Size(43, 17);
             this.cbOre.TabIndex = 2;
@@ -178,6 +129,19 @@
             this.cbWood.UseVisualStyleBackColor = true;
             this.cbWood.CheckedChanged += new System.EventHandler(this.harvestableCheckChange);
             // 
+            // cbTreasures
+            // 
+            this.cbTreasures.AutoSize = true;
+            this.cbTreasures.Checked = true;
+            this.cbTreasures.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbTreasures.Location = new System.Drawing.Point(6, 65);
+            this.cbTreasures.Name = "cbTreasures";
+            this.cbTreasures.Size = new System.Drawing.Size(73, 17);
+            this.cbTreasures.TabIndex = 7;
+            this.cbTreasures.Text = "Treasures";
+            this.cbTreasures.UseVisualStyleBackColor = true;
+            this.cbTreasures.CheckedChanged += new System.EventHandler(this.harvestableCheckChange);
+            // 
             // cbFiber
             // 
             this.cbFiber.AutoSize = true;
@@ -190,6 +154,28 @@
             this.cbFiber.Text = "Fiber";
             this.cbFiber.UseVisualStyleBackColor = true;
             this.cbFiber.CheckedChanged += new System.EventHandler(this.harvestableCheckChange);
+            // 
+            // cbHarvestable
+            // 
+            this.cbHarvestable.AutoSize = true;
+            this.cbHarvestable.Location = new System.Drawing.Point(6, 42);
+            this.cbHarvestable.Name = "cbHarvestable";
+            this.cbHarvestable.Size = new System.Drawing.Size(83, 17);
+            this.cbHarvestable.TabIndex = 6;
+            this.cbHarvestable.Text = "Harvestable";
+            this.cbHarvestable.UseVisualStyleBackColor = true;
+            this.cbHarvestable.CheckedChanged += new System.EventHandler(this.harvestableCheckChange);
+            // 
+            // cbSkinnable
+            // 
+            this.cbSkinnable.AutoSize = true;
+            this.cbSkinnable.Location = new System.Drawing.Point(6, 19);
+            this.cbSkinnable.Name = "cbSkinnable";
+            this.cbSkinnable.Size = new System.Drawing.Size(73, 17);
+            this.cbSkinnable.TabIndex = 3;
+            this.cbSkinnable.Text = "Skinnable";
+            this.cbSkinnable.UseVisualStyleBackColor = true;
+            this.cbSkinnable.CheckedChanged += new System.EventHandler(this.harvestableCheckChange);
             // 
             // groupBox3
             // 
@@ -228,7 +214,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(129, 163);
+            this.button1.Location = new System.Drawing.Point(129, 210);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(154, 23);
             this.button1.TabIndex = 12;
@@ -238,7 +224,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(129, 134);
+            this.button2.Location = new System.Drawing.Point(129, 181);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(154, 23);
             this.button2.TabIndex = 16;
@@ -562,11 +548,35 @@
             this.cbTier51.UseVisualStyleBackColor = true;
             this.cbTier51.CheckedChanged += new System.EventHandler(this.tierCheckChange);
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.cbSkinnable);
+            this.groupBox4.Controls.Add(this.cbHarvestable);
+            this.groupBox4.Controls.Add(this.cbOtherMobs);
+            this.groupBox4.Location = new System.Drawing.Point(129, 107);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(154, 68);
+            this.groupBox4.TabIndex = 21;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Monsters";
+            // 
+            // cbOtherMobs
+            // 
+            this.cbOtherMobs.AutoSize = true;
+            this.cbOtherMobs.Location = new System.Drawing.Point(84, 19);
+            this.cbOtherMobs.Name = "cbOtherMobs";
+            this.cbOtherMobs.Size = new System.Drawing.Size(52, 17);
+            this.cbOtherMobs.TabIndex = 5;
+            this.cbOtherMobs.Text = "Other";
+            this.cbOtherMobs.UseVisualStyleBackColor = true;
+            this.cbOtherMobs.CheckedChanged += new System.EventHandler(this.harvestableCheckChange);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(296, 260);
+            this.ClientSize = new System.Drawing.Size(290, 260);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button2);
@@ -576,9 +586,9 @@
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(312, 299);
+            this.MaximumSize = new System.Drawing.Size(306, 299);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(312, 299);
+            this.MinimumSize = new System.Drawing.Size(306, 299);
             this.Name = "Form1";
             this.Text = "AO RADARO - V 1.12.365";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -589,6 +599,8 @@
             this.groupBox3.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -598,10 +610,9 @@
 
         public System.Windows.Forms.GroupBox groupBox2;
         public System.Windows.Forms.CheckBox cbTreasures;
-        public System.Windows.Forms.CheckBox cbMob;
-        public System.Windows.Forms.CheckBox cbEntities;
+        public System.Windows.Forms.CheckBox cbHarvestable;
         public System.Windows.Forms.CheckBox cbRock;
-        public System.Windows.Forms.CheckBox cbAnimal;
+        public System.Windows.Forms.CheckBox cbSkinnable;
         public System.Windows.Forms.CheckBox cbOre;
         public System.Windows.Forms.CheckBox cbWood;
         public System.Windows.Forms.CheckBox cbFiber;
@@ -637,6 +648,8 @@
         public System.Windows.Forms.CheckBox cbTier61;
         public System.Windows.Forms.CheckBox cbTier51;
         public System.Windows.Forms.CheckBox cbTier41;
+        private System.Windows.Forms.GroupBox groupBox4;
+        public System.Windows.Forms.CheckBox cbOtherMobs;
     }
 }
 

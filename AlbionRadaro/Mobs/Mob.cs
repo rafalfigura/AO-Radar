@@ -13,18 +13,22 @@ namespace AlbionRadaro.Mobs
         Single posX;
         Single posY;
         int health;
+        byte charges;
+        MobInfo mobInfo;
 
-        public Mob(int id, int typeId, Single posX, Single posY, int health)
+        public Mob(int id, int typeId, Single posX, Single posY, int health, byte charges)
         {
             this.id = id;
             this.typeId = typeId;
             this.posX = posX;
             this.posY = posY;
             this.health = health;
+            this.charges = charges;
+            mobInfo = MobInfo.getMobInfo(typeId);
         }
         public override string ToString()
         {
-            return "id:" + id+ " typeId: " + typeId + " posX: " + posX + " posY: " + posY + " health: " + health;
+            return "id:" + id + " typeId: " + typeId + " posX: " + posX + " posY: " + posY + " health: " + health + " charges: " + charges;
         }
         public int Id
         {
@@ -50,6 +54,54 @@ namespace AlbionRadaro.Mobs
         {
             get { return health; }
             set { health = value; }
+        }
+
+        public byte Charges
+        {
+            get { return charges; }
+            set { charges = value; }
+        }
+
+        internal MobInfo MobInfo
+        {
+            get { return mobInfo; }
+            set { mobInfo = value; }
+        }
+
+
+        internal string getMapStringInfo()
+        {
+            if (mobInfo != null)
+            {
+                if (mobInfo.MobType == MobType.HARVESTABLE)
+                {
+                    switch (mobInfo.HarvestableMobType)
+                    {
+                        case HarvestableMobType.ESSENCE:
+                            return "E";
+                        case HarvestableMobType.SWAMP:
+                            return "F";
+                        case HarvestableMobType.STEPPE:
+                            return "L";
+                        case HarvestableMobType.MOUNTAIN:
+                            return "O";
+                        case HarvestableMobType.FOREST:
+                            return "W";
+                        case HarvestableMobType.HIGHLAND:
+                            return "R";
+
+                    }
+                }
+                else if (mobInfo.MobType == MobType.SKINNABLE)
+                {
+                    return "S";
+                }
+                else if (mobInfo.MobType == MobType.OTHER)
+                {
+                    return "M";
+                }
+            }
+            return "M";
         }
     }
 }
