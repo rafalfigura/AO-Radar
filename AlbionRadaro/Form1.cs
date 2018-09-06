@@ -148,7 +148,7 @@ namespace AlbionRadaro
             //mapForm.SetBitmap(bitmap);
             while (true)
             {
-                    
+                bitmap = new Bitmap(500,500);
                 using (Graphics g = Graphics.FromImage(bitmap))
                 {
                     
@@ -266,10 +266,11 @@ namespace AlbionRadaro
                             mapForm.Invoke((Action)(() =>
                             {
                                 mapForm.SetBitmap(RotateImage(bitmap, 225f));
+                                bitmap.Dispose();
                             }));
                         }
                     }
-                Thread.Sleep(10);
+            //    Thread.Sleep(10);
             }
         }
         public string Between(string STR, string FirstString, string LastString)
