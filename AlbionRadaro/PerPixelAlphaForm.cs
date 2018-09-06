@@ -70,7 +70,6 @@ namespace AlbionRadaro
                 Win32.ReleaseDC(IntPtr.Zero, screenDc);
                 if (hBitmap != IntPtr.Zero)
                 {
-                    Console.WriteLine("deleting");
                     Win32.SelectObject(memDc, oldBitmap);
                     //Windows.DeleteObject(hBitmap); // The documentation says that we have to use the Windows.DeleteObject... but since there is no such method I use the normal DeleteObject from Win32 GDI and it's working fine without any resource leak.
                     Win32.DeleteObject(hBitmap);
@@ -90,6 +89,24 @@ namespace AlbionRadaro
                     | WS_EX_TOPMOST;
                 return cp;
             }
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // PerPixelAlphaForm
+            // 
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Name = "PerPixelAlphaForm";
+            this.Load += new System.EventHandler(this.PerPixelAlphaForm_Load);
+            this.ResumeLayout(false);
+
+        }
+
+        private void PerPixelAlphaForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

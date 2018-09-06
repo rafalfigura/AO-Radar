@@ -33,8 +33,10 @@ namespace AlbionRadaro
         {
             InitializeComponent();
             Settings.loadSettings(this);
-            mapForm.Show();
 
+            mapForm.Show();
+            mapForm.Left = (int)nRadarX.Value;
+            mapForm.Top = (int)nRadarY.Value;
         }
           
         public static Bitmap RotateImage(Bitmap b, float angle)
@@ -485,6 +487,7 @@ namespace AlbionRadaro
                 mapForm.Left = int.Parse(nRadarX.Value.ToString());
                 mapForm.Top = int.Parse(nRadarY.Value.ToString());
             }
+            updateSettings();
         }
 
     }

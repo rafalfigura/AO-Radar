@@ -404,13 +404,25 @@ namespace AlbionRadaro {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool Setting {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int radarX {
             get {
-                return ((bool)(this["Setting"]));
+                return ((int)(this["radarX"]));
             }
             set {
-                this["Setting"] = value;
+                this["radarX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int radarY {
+            get {
+                return ((int)(this["radarY"]));
+            }
+            set {
+                this["radarY"] = value;
             }
         }
     }

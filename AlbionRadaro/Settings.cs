@@ -51,6 +51,9 @@ namespace AlbionRadaro
 
             s.rTreasures    = form.cbTreasures.Checked;
             s.rSoundOnPlayer = form.cbSounds.Checked;
+
+            s.radarX = (int)form.nRadarX.Value;
+            s.radarY = (int)form.nRadarY.Value;
             s.Save();
 
         }
@@ -88,7 +91,8 @@ namespace AlbionRadaro
             form.cbHarvestable.Checked       = s.rSkinnableMob;
             form.cbTreasures.Checked = s.rTreasures;
             form.cbSounds.Checked    = s.rSoundOnPlayer;
-
+            form.nRadarX.Value = s.radarX;
+            form.nRadarY.Value = s.radarY;
         }
         public static bool DisplayPeople
         {

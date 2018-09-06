@@ -703,8 +703,8 @@
         private System.Windows.Forms.GroupBox groupBox4;
         public System.Windows.Forms.CheckBox cbOtherMobs;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.NumericUpDown nRadarY;
-        private System.Windows.Forms.NumericUpDown nRadarX;
+        public System.Windows.Forms.NumericUpDown nRadarY;
+        public System.Windows.Forms.NumericUpDown nRadarX;
     }
 }
 
