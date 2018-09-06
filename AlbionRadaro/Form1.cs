@@ -32,10 +32,8 @@ namespace AlbionRadaro
         public Form1()
         {
             InitializeComponent();
-
-            mapForm.Show();
             Settings.loadSettings(this);
-            updateSettings();
+            mapForm.Show();
 
         }
           
@@ -71,11 +69,14 @@ namespace AlbionRadaro
 
                 Thread d = new Thread(() => drawerThread());
                 d.Start();
+
+               
+               // ;
             }
             catch (Exception ea)
             {
                 Console.WriteLine(ea.ToString());
-                while (true) ;
+                //while (true) ;
             }
         }
         public static Double Distance(Single x1, Single x2, Single y1, Single y2)
@@ -84,6 +85,7 @@ namespace AlbionRadaro
         }
         private void drawerThread()
         {
+            Thread.Sleep(100);
             Color[] mapColors =  {
                     Color.White, 
                     Color.Black,
@@ -143,7 +145,8 @@ namespace AlbionRadaro
             Font font = new Font("Arial", 3, FontStyle.Bold);
 
             float scale = 4.0f;
-           // mapForm.SetBitmap(bitmap);
+            //if()
+            //mapForm.SetBitmap(bitmap);
             while (true)
             {
                     
@@ -259,17 +262,19 @@ namespace AlbionRadaro
 
                             if (m.Charges > 0) g.DrawEllipse(chargePen[m.Charges - 1], hX-3 , hY-3, 6, 6);
                         }
+                        if (mapForm.InvokeRequired)
+                        {
+                            mapForm.Invoke((Action)(() =>
+                            {
+                                mapForm.SetBitmap(RotateImage(bitmap, 225f));
+                            }));
+                        }
                     }
 
-                if (mapForm.InvokeRequired)
-                {
-                    mapForm.Invoke((Action)(() => {
-                        mapForm.SetBitmap(RotateImage(bitmap, 225f));
-                    }));
-                }
-                    bitmap.Save("a" + new Random().Next(0,1000000000)+".png");
+                
+               //     bitmap.Save("a" + new Random().Next(0,1000000000)+".png");
                 Thread.Sleep(10);
-
+              //  Console.WriteLine("EEE");
             }
         }
         public string Between(string STR, string FirstString, string LastString)
@@ -473,8 +478,17 @@ namespace AlbionRadaro
         private void MoveRadarValueChanged(object sender, EventArgs e)
         {
             Console.WriteLine(nRadarX.Value + " " + nRadarY.Value);
-            mapForm.Left = int.Parse(nRadarX.Value.ToString());
-            mapForm.Top = int.Parse(nRadarY.Value.ToString());
+            if (mapForm.InvokeRequired) { 
+                mapForm.Invoke((Action)(()=>{
+                    mapForm.Left = int.Parse(nRadarX.Value.ToString());
+                    mapForm.Top = int.Parse(nRadarY.Value.ToString());
+                }));
+            }
+            else
+            {
+                mapForm.Left = int.Parse(nRadarX.Value.ToString());
+                mapForm.Top = int.Parse(nRadarY.Value.ToString());
+            }
         }
 
     }

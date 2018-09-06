@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace AlbionRadaro
 {
-    
+
     /// <para>PerPixel forms should derive from this base class</para>
     /// <author><name>Rui Godinho Lopes</name><email>rui@ruilopes.com</email></author>
     public class PerPixelAlphaForm : Form
@@ -26,7 +26,6 @@ namespace AlbionRadaro
         public void SetBitmap(Bitmap bitmap)
         {
             SetBitmap(bitmap, 255);
-
         }
 
         /// <para>Changes the current bitmap with a custom opacity level.  Here is where all happens!</para>
@@ -59,11 +58,12 @@ namespace AlbionRadaro
                 blend.SourceConstantAlpha = opacity;
                 blend.AlphaFormat = Win32.AC_SRC_ALPHA;
 
-                UInt32 initialStyle = Win32.GetWindowLong(this.Handle, -20);
-                Win32.SetWindowLong(this.Handle, -20, initialStyle | 0x80000 | 0x20);
-                Win32.SetWindowPos(this.Handle, HWND_TOPMOST, 0, 0, 0, 0, TOPMOST_FLAGS);
+                //UInt32 initialStyle = Win32.GetWindowLong(Handle, -20);
+               // Win32.SetWindowLong(Handle, -20, initialStyle | 0x80000 | 0x20);
 
                 Win32.UpdateLayeredWindow(Handle, screenDc, ref topPos, ref size, memDc, ref pointSource, 0, ref blend, Win32.ULW_ALPHA);
+               // TopMost = true;
+               // Win32.SetWindowPos(Handle, HWND_TOPMOST, 0, 0, 0, 0, TOPMOST_FLAGS);
             }
             finally
             {
@@ -78,33 +78,16 @@ namespace AlbionRadaro
             }
         }
 
+        private const int WS_EX_TOPMOST = 0x00000008;
         protected override CreateParams CreateParams
         {
             get
             {
                 CreateParams cp = base.CreateParams;
-                cp.ExStyle |= 0x00080000; // This form has to have the WS_EX_LAYERED extended style
+                cp.ExStyle = cp.ExStyle  | 0x00080000 // This form has to have the WS_EX_LAYERED extended style
+                    | WS_EX_TOPMOST;
                 return cp;
             }
-        }
-        
-        private void InitializeComponent()
-        {
-            this.SuspendLayout();
-
-            // 
-            // PerPixelAlphaForm
-            // 
-            this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Name = "PerPixelAlphaForm";
-            this.Load += new System.EventHandler(this.PerPixelAlphaForm_Load);
-            this.ResumeLayout(false);
-
-        }
-
-        private void PerPixelAlphaForm_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
