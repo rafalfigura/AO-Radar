@@ -262,7 +262,6 @@ namespace AlbionRadaro
                     }
                  
                     mapForm.pictureBox2.Image = RotateImage(bitmap, 225f);
-                    bitmap.Save("a" + new Random().Next(0,1000000000)+".png");
                 Thread.Sleep(10);
 
             }
