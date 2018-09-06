@@ -38,7 +38,7 @@ namespace AlbionRadaro
             mapForm.Left = (int)nRadarX.Value;
             mapForm.Top = (int)nRadarY.Value;
         }
-          
+
         public static Bitmap RotateImage(Bitmap b, float angle)
         {
             //create a new empty bitmap to hold rotated image
@@ -71,9 +71,6 @@ namespace AlbionRadaro
 
                 Thread d = new Thread(() => drawerThread());
                 d.Start();
-
-               
-               // ;
             }
             catch (Exception ea)
             {
@@ -88,49 +85,50 @@ namespace AlbionRadaro
         private void drawerThread()
         {
             Color[] mapColors =  {
-                    Color.White, 
+                    Color.White,
                     Color.Black,
                     Color.Red,
                     Color.Coral,
                     Color.Black,
-                    Color.Gray, 
-                    Color.Blue, 
-                    Color.Red, 
-                    Color.Coral, 
+                    Color.Gray,
+                    Color.Blue,
+                    Color.Red,
+                    Color.Coral,
                     Color.Goldenrod,
-                    Color.Silver, 
-                    Color.Blue, 
+                    Color.Silver,
+                    Color.Blue,
                     Color.Green,
                     Color.Purple
                 };
-            Pen linePen = new Pen(Color.Red,3);
+            Pen linePen = new Pen(Color.Red, 3);
             Brush[] harvestBrushes = {
                 Brushes.Black,
-                Brushes.Gray, 
-                Brushes.Gray, 
-                Brushes.Gray, 
-                Brushes.Blue, 
-                Brushes.Red, 
-                Brushes.Coral, 
-                Brushes.Goldenrod, 
+                Brushes.Gray,
+                Brushes.Gray,
+                Brushes.Gray,
+                Brushes.Blue,
+                Brushes.Red,
+                Brushes.Coral,
+                Brushes.Goldenrod,
                 Brushes.Silver
             };
             Brush[] fontPerColor = {
                 Brushes.White,
-                Brushes.White, 
-                Brushes.White, 
-                Brushes.White, 
-                Brushes.White, 
-                Brushes.White, 
-                Brushes.Black, 
-                Brushes.Black, 
+                Brushes.White,
+                Brushes.White,
+                Brushes.White,
+                Brushes.White,
+                Brushes.White,
+                Brushes.Black,
+                Brushes.Black,
                 Brushes.Black
-                                        
+
             };
             Pen[] chargePen = {
+                new Pen (Color.Black, 1.5f),
                 new Pen (Color.Green, 1.5f),
-                new Pen(Color.Blue, 1.5f), 
-                new Pen(Color.Purple, 1.5f), 
+                new Pen(Color.Blue, 1.5f),
+                new Pen(Color.Purple, 1.5f),
             };
             Pen playerPen = new Pen(Color.Red, 2f);
             Brush playerBrush = Brushes.Red;
@@ -150,10 +148,10 @@ namespace AlbionRadaro
             //mapForm.SetBitmap(bitmap);
             while (true)
             {
-                bitmap = new Bitmap(500,500);
+                bitmap = new Bitmap(500, 500);
                 using (Graphics g = Graphics.FromImage(bitmap))
                 {
-                    
+
                     g.Clear(Color.Transparent);
                     lpX = playerHandler.localPlayerPosX();
                     lpY = playerHandler.localPlayerPosY();
@@ -165,20 +163,24 @@ namespace AlbionRadaro
                     g.DrawEllipse(linePen, -WIDTH / 2 + 6, -HEIGHT / 2 + 6, WIDTH - 6, HEIGHT - 6);
 
                     g.ScaleTransform(scale, scale);
-                    
+
                     List<Harvestable> hLis = new List<Harvestable>();
-                    lock (harvestableHandler) { 
-                        try{
+                    lock (harvestableHandler)
+                    {
+                        try
+                        {
                             hLis = this.harvestableHandler.HarvestableList.ToList();
-                        }catch (Exception e1){}
+                        }
+                        catch (Exception e1) { }
                     }
-                    foreach (Harvestable h in hLis){
+                    foreach (Harvestable h in hLis)
+                    {
                         if (!Settings.IsInTiers(h.Tier, h.Charges)) continue;
                         if (!Settings.IsInHarvestable((HarvestableType)h.Type)) continue;
-                        
+
                         if (h.Size == 0) continue;
 
-                        Single hX = -1* h.PosX + lpX;
+                        Single hX = -1 * h.PosX + lpX;
                         Single hY = h.PosY - lpY;
 
                         g.FillEllipse(harvestBrushes[h.Tier], (float)(hX - 2.5f), (float)(hY - 2.5f), 5f, 5f);
@@ -192,87 +194,104 @@ namespace AlbionRadaro
                         if (h.Charges > 0) g.DrawEllipse(chargePen[h.Charges - 1], hX - 3, hY - 3, 6, 6);
                     }
 
-                    if (Settings.DisplayPeople){
+                    if (Settings.DisplayPeople)
+                    {
                         List<Player> pLis = new List<Player>();
-                        lock (this.playerHandler.PlayersInRange){
-                            try{
+                        lock (this.playerHandler.PlayersInRange)
+                        {
+                            try
+                            {
                                 pLis = this.playerHandler.PlayersInRange.ToList();
-                            }catch (Exception e2){}
+                            }
+                            catch (Exception e2) { }
                         }
 
-                        foreach (Player p in pLis) {
+                        foreach (Player p in pLis)
+                        {
                             Single hX = -1 * p.PosX + lpX;
                             Single hY = p.PosY - lpY;
                             g.FillEllipse(playerBrush, hX, hY, 4, 4);
                         }
                     }
-                    
-                        List<Mob> mList = new List<Mob>();
-                        lock (mobsHandler.MobList){
-                            try{
-                                mList = this.mobsHandler.MobList.ToList();
-                            }catch (Exception e1){}
-                        }
 
-                        foreach (Mob m in mList) {
-                            Single hX = -1 * m.PosX + lpX;
-                            Single hY = m.PosY - lpY;
-
-                            byte mobTier = 5;
-                            MobType mobType = MobType.OTHER;
-
-                            if(m.MobInfo != null){
-                                mobTier = m.MobInfo.Tier;
-                                mobType = m.MobInfo.MobType;
-
-                                if (!Settings.IsInMobs(mobType)) continue;
-                                if (!Settings.IsInTiers(mobTier, m.Charges)) continue;
-
-                                    switch(m.MobInfo.HarvestableMobType){
-                                        case HarvestableMobType.ESSENCE:
-                                            //idk?
-                                        case HarvestableMobType.SWAMP: 
-                                            if (!Settings.IsInHarvestable(HarvestableType.FIBER)) continue;
-                                            break;
-                                        case HarvestableMobType.STEPPE:
-                                            if (!Settings.IsInHarvestable(HarvestableType.HIDE)) continue;
-                                            break;
-                                        case HarvestableMobType.MOUNTAIN:
-                                            if (!Settings.IsInHarvestable(HarvestableType.ORE)) continue;
-                                            break;
-                                        case HarvestableMobType.FOREST:
-                                            if (!Settings.IsInHarvestable(HarvestableType.WOOD)) continue;
-                                            break;
-                                        case HarvestableMobType.HIGHLAND:
-                                            if (!Settings.IsInHarvestable(HarvestableType.ROCK)) continue;
-                                            break;
-                                    }
-                            }
-                            else
-                            {
-                                if(Settings.IsInMobs(MobType.OTHER))
-                                    g.FillEllipse(Brushes.Black,hX-1, hY-1, 2f, 2f);
-                                continue;
-                            }
-                            g.FillEllipse(harvestBrushes[mobTier], (float)(hX - 2.5f), (float)(hY - 2.5f), 5f, 5f);
-                            g.TranslateTransform(hX, hY);
-                            g.RotateTransform(135f);
-                            g.DrawString(m.getMapStringInfo(), font, fontPerColor[mobTier], -2.5f, -2.5f);
-                            g.RotateTransform(-135f);
-                            g.TranslateTransform(-hX, -hY);
-
-                            if (m.Charges > 0) g.DrawEllipse(chargePen[m.Charges - 1], hX-3 , hY-3, 6, 6);
-                        }
-                        if (mapForm.InvokeRequired)
+                    List<Mob> mList = new List<Mob>();
+                    lock (mobsHandler.MobList)
+                    {
+                        try
                         {
-                            mapForm.Invoke((Action)(() =>
+                            mList = this.mobsHandler.MobList.ToList();
+                        }
+                        catch (Exception e1) { }
+                    }
+
+                    foreach (Mob m in mList)
+                    {
+                        Single hX = -1 * m.PosX + lpX;
+                        Single hY = m.PosY - lpY;
+
+                        byte mobTier = 5;
+                        MobType mobType = MobType.OTHER;
+
+                        if (m.MobInfo != null)
+                        {
+                            mobTier = m.MobInfo.Tier;
+                            mobType = m.MobInfo.MobType;
+
+                            if (!Settings.IsInMobs(mobType)) continue;
+                            if (!Settings.IsInTiers(mobTier, m.EnchantmentLevel)) continue;
+
+                            switch (m.MobInfo.HarvestableMobType)
                             {
-                                mapForm.SetBitmap(RotateImage(bitmap, 225f));
-                                bitmap.Dispose();
-                            }));
+                                case HarvestableMobType.ESSENCE:
+                                //idk?
+                                case HarvestableMobType.SWAMP:
+                                    if (!Settings.IsInHarvestable(HarvestableType.FIBER)) continue;
+                                    break;
+                                case HarvestableMobType.STEPPE:
+                                    if (!Settings.IsInHarvestable(HarvestableType.HIDE)) continue;
+                                    break;
+                                case HarvestableMobType.MOUNTAIN:
+                                    if (!Settings.IsInHarvestable(HarvestableType.ORE)) continue;
+                                    break;
+                                case HarvestableMobType.FOREST:
+                                    if (!Settings.IsInHarvestable(HarvestableType.WOOD)) continue;
+                                    break;
+                                case HarvestableMobType.HIGHLAND:
+                                    if (!Settings.IsInHarvestable(HarvestableType.ROCK)) continue;
+                                    break;
+                            }
+                            if (Settings.IsInTiers(mobTier, m.EnchantmentLevel))
+                            {
+                                g.FillEllipse(harvestBrushes[mobTier], (float)(hX - 2.5f), (float)(hY - 2.5f), 5f, 5f);
+                                g.TranslateTransform(hX, hY);
+                                g.RotateTransform(135f);
+                                g.DrawString(m.getMapStringInfo(), font, fontPerColor[mobTier], -2.5f, -2.5f);
+                                g.RotateTransform(-135f);
+                                g.TranslateTransform(-hX, -hY);
+                            }
+                        }
+                        else
+                        {
+                            if (Settings.IsInMobs(MobType.OTHER))
+                                g.FillEllipse(Brushes.Black, hX - 1, hY - 1, 2f, 2f);
+                            continue;
+                        }
+
+                        if (m.EnchantmentLevel > 0)
+                        {
+                            g.DrawEllipse(chargePen[m.EnchantmentLevel], hX - 3, hY - 3, 6, 6);
                         }
                     }
-            //    Thread.Sleep(10);
+                    if (mapForm.InvokeRequired)
+                    {
+                        mapForm.Invoke((Action)(() =>
+                        {
+                            mapForm.SetBitmap(RotateImage(bitmap, 225f));
+                            bitmap.Dispose();
+                        }));
+                    }
+                }
+                //    Thread.Sleep(10);
             }
         }
         public string Between(string STR, string FirstString, string LastString)
@@ -310,7 +329,7 @@ namespace AlbionRadaro
                 {
                     using (PacketCommunicator communicator =
                            selectedDevice.Open(65536,                                  // portion of the packet to capture
-                        // 65536 guarantees that the whole packet will be captured on all the link layers
+                                                                                       // 65536 guarantees that the whole packet will be captured on all the link layers
                                                PacketDeviceOpenAttributes.Promiscuous, // promiscuous mode
                                                1000))                                  // read timeout
                     {
@@ -371,7 +390,7 @@ namespace AlbionRadaro
             Settings.UpdateTier(8, 2, this.cbTier82.Checked);
             Settings.UpdateTier(8, 3, this.cbTier83.Checked);
 
-            
+
 
             Settings.UpdateHarvestable(new List<HarvestableType>{
                 HarvestableType.FIBER,
@@ -455,7 +474,7 @@ namespace AlbionRadaro
         protected override void OnPaintBackground(PaintEventArgs e)
         // Paint background with underlying graphics from other controls
         {
-           
+
         }
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -476,8 +495,10 @@ namespace AlbionRadaro
         private void MoveRadarValueChanged(object sender, EventArgs e)
         {
             Console.WriteLine(nRadarX.Value + " " + nRadarY.Value);
-            if (mapForm.InvokeRequired) { 
-                mapForm.Invoke((Action)(()=>{
+            if (mapForm.InvokeRequired)
+            {
+                mapForm.Invoke((Action)(() =>
+                {
                     mapForm.Left = int.Parse(nRadarX.Value.ToString());
                     mapForm.Top = int.Parse(nRadarY.Value.ToString());
                 }));
