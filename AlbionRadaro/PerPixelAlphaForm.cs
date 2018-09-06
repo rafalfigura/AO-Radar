@@ -58,8 +58,8 @@ namespace AlbionRadaro
                 blend.SourceConstantAlpha = opacity;
                 blend.AlphaFormat = Win32.AC_SRC_ALPHA;
 
-                //UInt32 initialStyle = Win32.GetWindowLong(Handle, -20);
-               // Win32.SetWindowLong(Handle, -20, initialStyle | 0x80000 | 0x20);
+                UInt32 initialStyle = Win32.GetWindowLong(Handle, -20);
+                Win32.SetWindowLong(Handle, -20, initialStyle | 0x80000 | 0x20);
 
                 Win32.UpdateLayeredWindow(Handle, screenDc, ref topPos, ref size, memDc, ref pointSource, 0, ref blend, Win32.ULW_ALPHA);
                // TopMost = true;
