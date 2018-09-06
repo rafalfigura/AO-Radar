@@ -85,7 +85,6 @@ namespace AlbionRadaro
         }
         private void drawerThread()
         {
-            Thread.Sleep(100);
             Color[] mapColors =  {
                     Color.White, 
                     Color.Black,
@@ -270,11 +269,7 @@ namespace AlbionRadaro
                             }));
                         }
                     }
-
-                
-               //     bitmap.Save("a" + new Random().Next(0,1000000000)+".png");
                 Thread.Sleep(10);
-              //  Console.WriteLine("EEE");
             }
         }
         public string Between(string STR, string FirstString, string LastString)
