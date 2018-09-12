@@ -13,22 +13,22 @@ namespace AlbionRadaro.Mobs
         Single posX;
         Single posY;
         int health;
-        byte charges;
+        byte enchantmentLevel;
         MobInfo mobInfo;
 
-        public Mob(int id, int typeId, Single posX, Single posY, int health, byte charges)
+        public Mob(int id, int typeId, Single posX, Single posY, int health, byte enchantmentLevel)
         {
             this.id = id;
             this.typeId = typeId;
             this.posX = posX;
             this.posY = posY;
             this.health = health;
-            this.charges = charges;
+            this.enchantmentLevel = enchantmentLevel;
             mobInfo = MobInfo.getMobInfo(typeId);
         }
         public override string ToString()
         {
-            return "id:" + id + " typeId: " + typeId + " posX: " + posX + " posY: " + posY + " health: " + health + " charges: " + charges;
+            return "id:" + id + " typeId: " + typeId + " posX: " + posX + " posY: " + posY + " health: " + health + " charges: " + enchantmentLevel;
         }
         public int Id
         {
@@ -56,10 +56,10 @@ namespace AlbionRadaro.Mobs
             set { health = value; }
         }
 
-        public byte Charges
+        public byte EnchantmentLevel
         {
-            get { return charges; }
-            set { charges = value; }
+            get { return enchantmentLevel; }
+            set { enchantmentLevel = value; }
         }
 
         internal MobInfo MobInfo

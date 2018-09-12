@@ -18,9 +18,10 @@ namespace AlbionRadaro
         public void AddHarvestable(int id, byte type, byte tier, Single posX, Single posY, byte charges, byte size)
         {
             Harvestable h = new Harvestable(id, type, tier, posX, posY, charges, size);
-            if (!harvestableList.Contains(h)) { 
+            if (!harvestableList.Contains(h))
+            {
                 harvestableList.Add(h);
-                Console.WriteLine("New Harvestable: " + h.ToString());
+                // Console.WriteLine("New Harvestable: " + h.ToString());
             }
         }
         public bool RemoveHarvestable(int id)
@@ -41,7 +42,7 @@ namespace AlbionRadaro
                 if (h.Id == harvestableId)
                 {
                     //TODO - update count of ores in place
-                   // h.Count = count;
+                    // h.Count = count;
                 }
             });
 

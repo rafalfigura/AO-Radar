@@ -22,18 +22,19 @@ namespace AlbionRadaro
         }
         public void OnEvent(byte code, Dictionary<byte, object> parameters)
         {
-            if (code == 2) {
+            if (code == 2)
+            {
                 //player movement comes with binary format - not normal.
                 onPlayerMovement(parameters);
                 return;
-            } 
+            }
 
             object val;
             parameters.TryGetValue((byte)252, out val);
             if (val == null) return;
 
             int iCode = 0;
-            if(!int.TryParse(val.ToString(), out iCode)) return;
+            if (!int.TryParse(val.ToString(), out iCode)) return;
 
             EventCodes eventCode = (EventCodes)iCode;
 
@@ -52,7 +53,7 @@ namespace AlbionRadaro
                     onNewCharacterEvent(parameters);
                     break;
                 case EventCodes.NewHarvestableObject:
-                      onNewHarvestableObject(parameters);
+                    onNewHarvestableObject(parameters);
                     break;
                 case EventCodes.NewSimpleHarvestableObjectList:
                     onNewSimpleHarvestableObjectList(parameters);
@@ -82,12 +83,11 @@ namespace AlbionRadaro
         private void onMobChangeState(Dictionary<byte, object> parameters)
         {
             int mobId = 0;
-            byte charges = 0;
+            byte enchantmentLevel = 0;
 
             if (!int.TryParse(parameters[0].ToString(), out mobId)) return;
-            if (!byte.TryParse(parameters[1].ToString(), out charges)) return;
-
-            mobsHandler.UpdateMobCharges(mobId, charges);
+            if (!byte.TryParse(parameters[1].ToString(), out enchantmentLevel)) return;
+            mobsHandler.UpdateMobEnchantmentLevel(mobId, enchantmentLevel);
 
         }
 
@@ -114,62 +114,70 @@ namespace AlbionRadaro
 
         private void onCastSpell(Dictionary<byte, object> parameters)
         {
-          //  foreach (KeyValuePair<byte, object> kvp in parameters)
-         //       Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+            //  foreach (KeyValuePair<byte, object> kvp in parameters)
+            //       Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
         }
 
         private void onInCombatStateUpdate(Dictionary<byte, object> parameters)
         {
-           // foreach (KeyValuePair<byte, object> kvp in parameters)
-           //     Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+            // foreach (KeyValuePair<byte, object> kvp in parameters)
+            //     Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
         }
         private void onJoinFinished(Dictionary<byte, object> parameters)
         {
             this.harvestableHandler.HarvestableList.Clear();
             this.mobsHandler.MobList.Clear();
-           // this.playerHandler.PlayersInRange.Clear();
+            // this.playerHandler.PlayersInRange.Clear();
         }
         private void onNewMob(Dictionary<byte, object> parameters)
         {
             /*
-                Key = 0, Value = 7987 //obj id
-                Key = 1, Value = 44 //type id
-                Key = 2, Value = 255
-                Key = 6, Value =
-                Key = 7, Value = System.Single[]//pos
-                Key = 8, Value = System.Single[] //pos target
-                Key = 9, Value = 35362072
-                Key = 10, Value = 6,401981
-                Key = 11, Value = 3
-                Key = 13, Value = 20 //health
-                Key = 14, Value = 20
-                Key = 16, Value = 35254961
-                Key = 20, Value = 261954
-                Key = 252, Value = 106
-                [0] objectId
-                [1] typeId
-                [8] moveTarget
-                [13] Health
+                Rhino Data (4258 HP)
+                Key = 0, Value = 12694, Type= System.Int16 // long Object Id ao5
+                Key = 1, Value = 41, Type= System.Byte  // short Type Id ao6
+                Key = 2, Value = 255, Type= System.Byte // Flagging status ao7
+                                Blue = 0,
+	                            Highland = 1,
+	                            Forest = 2,
+	                            Steppe = 3,
+	                            Mountain = 4,
+	                            Swamp = 5,
+	                            Red = byte.MaxValue
+                Key = 6, Value = , Type= System.String // apb?
+                Key = 7, Value = System.Single[], Type= System.Single[] // Pos // arg apc
+                Key = 8, Value = System.Single[], Type= System.Single[] // Pos Target // arg apd
+                Key = 9, Value = 26835839, Type= System.Int32 // GameTimeStamp ape
+                Key = 10, Value = 171.1836, Type= System.Single // apf (float)
+                Key = 11, Value = 2, Type= System.Single // apg (float)
+                Key = 13, Value = 4258, Type= System.Single // Health api (float)
+                Key = 14, Value = 4258, Type= System.Single // apj (float)
+                Key = 16, Value = 26665619, Type= System.Int32 // GameTimeStamp app
+                Key = 17, Value = 245, Type= System.Single // float apm
+                Key = 18, Value = 245, Type= System.Single // float apn
+                Key = 19, Value = 7, Type= System.Single // float apo
+                Key = 20, Value = 26835811, Type= System.Int32 // GameTimeStamp app
+                Key = 252, Value = 106, Type= System.Int16
              */
-      
-            Console.WriteLine("parameters[6].GetType():" + parameters[6].GetType() + " " + parameters[6].ToString().Length);
-            foreach (KeyValuePair<byte, object> kvp in parameters)
-                    Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
 
 
             int id = int.Parse(parameters[0].ToString());
             int typeId = int.Parse(parameters[1].ToString());
             Single[] loc = (Single[])parameters[8];
+            // Console.WriteLine("Loc Locs: " + loc.Length);
+            DateTime timeA = new DateTime(long.Parse(parameters[9].ToString()));
+            DateTime timeB = new DateTime(long.Parse(parameters[16].ToString()));
+            DateTime timeC = new DateTime(long.Parse(parameters[20].ToString()));
             Single posX = (Single)loc[0];
             Single posY = (Single)loc[1];
             int health = int.Parse(parameters[13].ToString());
+            int rarity = int.Parse(parameters[20].ToString());
 
             mobsHandler.AddMob(id, typeId, posX, posY, health);
         }
         private void onNewSimpleHarvestableObjectList(Dictionary<byte, object> parameters)
         {
             //return;
-           // foreach (KeyValuePair<byte, object> kvp in parameters)
+            // foreach (KeyValuePair<byte, object> kvp in parameters)
             //    Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
 
             List<int> a0 = new List<int>();
@@ -225,9 +233,9 @@ namespace AlbionRadaro
         }
         private void onNewHarvestableObject(Dictionary<byte, object> parameters)
         {
-           // Console.WriteLine("onNewHarvestableObject");
-          //  foreach (KeyValuePair<byte, object> kvp in parameters)
-         //        Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+            // Console.WriteLine("onNewHarvestableObject");
+            //  foreach (KeyValuePair<byte, object> kvp in parameters)
+            //        Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
             /*
                 //Key = 10, Value = 2 //count. If not set its empty
                 Key = 0, Value = 7589
@@ -258,8 +266,8 @@ namespace AlbionRadaro
         }
         private void onHarvestFinished(Dictionary<byte, object> parameters)
         {//
-           // foreach (KeyValuePair<byte, object> kvp in parameters)
-           //     Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+         // foreach (KeyValuePair<byte, object> kvp in parameters)
+         //     Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
             int harvestableId = int.Parse(parameters[3].ToString());
             //Int32 count = Int32.Parse(parameters[2].ToString());
 
@@ -275,7 +283,7 @@ namespace AlbionRadaro
                 Key = 2, Value = 1 //tier
                 Key = 252, Value = 33
              */
-           // Console.WriteLine("onHarvestableChangeState");
+            // Console.WriteLine("onHarvestableChangeState");
             //foreach (KeyValuePair<byte, object> kvp in parameters)
             //    Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
         }
@@ -285,16 +293,16 @@ namespace AlbionRadaro
             /*
              onLeave contains strange data. It should delete Harvestable + Players + Monsters. But its sketchy.
              */
-             int id = int.Parse(parameters[0].ToString());
-           //  if (harvestableHandler.RemoveHarvestable(id))
-           //      Console.WriteLine("Removed harvestable: " + id);
-           //  else 
-             if (playerHandler.RemovePlayer(id))
-                 playerHandler.RemovePlayer(id);
-                 //Console.WriteLine("Removed player: " + id);
+            int id = int.Parse(parameters[0].ToString());
+            //  if (harvestableHandler.RemoveHarvestable(id))
+            //      Console.WriteLine("Removed harvestable: " + id);
+            //  else 
+            if (playerHandler.RemovePlayer(id))
+                playerHandler.RemovePlayer(id);
+            //Console.WriteLine("Removed player: " + id);
             // else
             //     Console.WriteLine("None removed: " + id);
-            
+
         }
         private void onLocalPlayerMovement(Dictionary<byte, object> parameters)
         {
@@ -317,10 +325,11 @@ namespace AlbionRadaro
 
             playerHandler.UpdatePlayerPosition(id, posX, posY);
         }
-        private void onNewCharacterEvent(Dictionary<byte, object> parameters){
+        private void onNewCharacterEvent(Dictionary<byte, object> parameters)
+        {
 
             if (Settings.PlaySoundOnPlayer())
-                new Thread(() => Console.Beep(1000,1000)).Start();
+                new Thread(() => Console.Beep(1000, 1000)).Start();
 
 
             int id = int.Parse(parameters[0].ToString());

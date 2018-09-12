@@ -20,7 +20,7 @@ namespace AlbionRadaro.Mobs
             Mob h = new Mob(id, typeId, posX, posY, health, 0);
             if (!mobsList.Contains(h)) {
                 mobsList.Add(h);
-                Console.WriteLine("Add mob: " + h.ToString());
+                // Console.WriteLine("Add mob: " + h.ToString());
             }
         }
         public bool RemoveMob(int id)
@@ -34,15 +34,9 @@ namespace AlbionRadaro.Mobs
         }
 
 
-        internal void UpdateMobCharges(int mobId, byte charges)
+        internal void UpdateMobEnchantmentLevel(int mobId, byte enchantmentLevel)
         {
-            mobsList.ForEach(h =>
-            {
-                if (h.Id == mobId)
-                    h.Charges = charges;
-                
-            });
-
+            mobsList.First(x => x.Id == mobId).EnchantmentLevel = enchantmentLevel;
         }
     }
 }
