@@ -191,7 +191,7 @@ namespace AlbionRadaro
                         g.TranslateTransform(-hX, -hY);
 
 
-                        if (h.Charges > 0) g.DrawEllipse(chargePen[h.Charges - 1], hX - 3, hY - 3, 6, 6);
+                        if (h.Charges > 0) g.DrawEllipse(chargePen[h.Charges], hX - 3, hY - 3, 6, 6);
                     }
 
                     if (Settings.DisplayPeople)
