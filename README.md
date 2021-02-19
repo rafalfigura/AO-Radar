@@ -1,3 +1,6 @@
+# NO LONGER WORKS
+AO changed a lot since last 3 years. It will never work again
+
 # AO-Radar
 
 Albion Online Player and Harvestable Radar
